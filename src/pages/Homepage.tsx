@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { LetsTalk } from "../components/LetsTalk";
 import { FAQ } from "../components/FAQ";
-import Marquee from "react-fast-marquee";
 import { ProductsMarquee } from "../components/ProductsMarquee";
 
 export const Homepage = () => {

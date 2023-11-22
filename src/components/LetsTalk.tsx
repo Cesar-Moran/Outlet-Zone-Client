@@ -1,4 +1,4 @@
-import { Instagram, Redo2 } from "lucide-react";
+import { Redo2 } from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
 import { IoLogoWhatsapp } from "react-icons/io";
 import { RiInstagramFill } from "react-icons/ri";
