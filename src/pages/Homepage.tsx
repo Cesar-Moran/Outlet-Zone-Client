@@ -1,16 +1,47 @@
 import { ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { LetsTalk } from "../components/LetsTalk";
+import { FAQ } from "../components/FAQ";
 
 export const Homepage = () => {
-  const [firstCardIsClicked, setFirstCardClicked] = useState(false);
-  const [secondCardIsClicked, setSecondCardClicked] = useState(false);
-  const [thirdCardIsClicked, setThirdCardClicked] = useState(false);
+  const [firstCardIsClicked, setFirstCardClicked] = useState(true);
+  const [secondCardIsClicked, setSecondCardClicked] = useState(true);
+  const [thirdCardIsClicked, setThirdCardClicked] = useState(true);
+
+  const images = [
+    "https://outletzone7.files.wordpress.com/2023/11/22-1685985038-e1700626356471.jpg",
+    "https://outletzone7.files.wordpress.com/2023/11/19330956-3284904655-e1700626312513.jpg",
+  ];
+
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      // Cambiar a la siguiente imagen en el array
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+    }, 2000); // Cambia este valor a la cantidad de milisegundos que desees entre cambios de imagen
+
+    return () => {
+      // Limpiar el intervalo al desmontar el componente
+      clearInterval(intervalId);
+    };
+  }, []);
+
+  const backgroundImageStyle = {
+    backgroundImage: `url(${images[currentImageIndex]})`,
+    backgroundSize: "contain",
+  };
 
   return (
     <article className="z-10">
-      <section className="hero min-h-screen bg-[url(https://media.gettyimages.com/id/1259269839/es/foto/encendiendo-el-aire-acondicionado.jpg?s=612x612&w=0&k=20&c=utruz5SdpWfZaoQtjepqzB38aH2gyDmkVQN7qNDdDdY=)] bg-cover ">
+      <section
+        className="hero min-h-screen bg-no-repeat sm:bg-repeat   "
+        style={backgroundImageStyle}
+      >
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md">
@@ -42,7 +73,8 @@ export const Homepage = () => {
           {/* First card */}
           {/* First card */}
           {/* First card */}
-          <div className="  bg-yellow-500 text-white text-start shadow-xl rounded-3xl w-full">
+          <div className=" hero bg-yellow-500 text-white text-start shadow-xl rounded-3xl w-full bg-[url(https://outletzone7.files.wordpress.com/2023/11/woman-taking-out-eggs-from-fridge-morning-breakfast-housewife-getting-helthy-eggs-other-ingredients-from-refrigerator-her-kitchen.jpg)]">
+            <div className="hero-overlay bg-opacity-60 rounded-3xl"></div>
             <div className="max-w-xl">
               <blockquote className="text-lg font-semibold px-8 pt-8 ">
                 Electrodomésticos de Calidad para tu Hogar
@@ -55,7 +87,7 @@ export const Homepage = () => {
                 {firstCardIsClicked ? (
                   <p className="mx-auto flex items-center justify-center gap-4  ">
                     <FaEyeSlash size={60} />
-                    <span className="opacity-0">Leer mas</span>
+                    <span className="opacity-0 hidden">Leer mas</span>
                   </p>
                 ) : (
                   <p className="mx-auto flex items-center justify-center   gap-4 ">
@@ -79,13 +111,13 @@ export const Homepage = () => {
             </div>
           </div>
 
-          <div className="divider divider-horizontal divider-neutral"></div>
           {/* Second card */}
           {/* Second card */}
           {/* Second card */}
           {/* Second card */}
-          <div className="  bg-yellow-500 text-white text-start shadow-xl  rounded-3xl  w-full">
-            <div className="max-w-xl">
+          <div className="hero  bg-[url(https://outletzone7.files.wordpress.com/2023/11/repairman-doing-air-conditioner-service.jpg)]  text-white text-start shadow-xl  rounded-3xl  w-full">
+            <div className="hero-overlay bg-opacity-60 rounded-3xl"></div>
+            <div className="max-w-xl ">
               <blockquote className="text-lg font-semibold px-8 pt-8 ">
                 Reparación Confiable para tus Electrodomésticos
               </blockquote>
@@ -97,7 +129,7 @@ export const Homepage = () => {
                 {secondCardIsClicked ? (
                   <p className="mx-auto flex items-center justify-center gap-4  ">
                     <FaEyeSlash size={60} />
-                    <span className="opacity-0">Leer mas</span>
+                    <span className="opacity-0 hidden">Leer mas</span>
                   </p>
                 ) : (
                   <p className="mx-auto flex items-center justify-center   gap-4 ">
@@ -120,13 +152,13 @@ export const Homepage = () => {
               </p>
             </div>
           </div>
-          <div className="divider divider-horizontal divider-neutral"></div>
 
           {/* Third card */}
           {/* Third card */}
           {/* Third card */}
           {/* Third card */}
-          <div className="  bg-yellow-500 text-white text-start shadow-xl  rounded-3xl w-full">
+          <div className=" hero bg-[url(https://img.freepik.com/free-photo/portrait-attractive-hispanic-handyman-writing-work-estimate-before-fixing-kitchen-sink_662251-2690.jpg?w=1380&t=st=1700681444~exp=1700682044~hmac=99bbd26781998766013d742dfd4f67d76ac0897a83f43f0f48f14778f3c3e71b)]  text-white text-start shadow-xl  rounded-3xl w-full">
+            <div className="hero-overlay bg-opacity-60 rounded-3xl"></div>
             <div className="max-w-xl">
               <blockquote className="text-lg font-semibold px-8 pt-8 ">
                 Prevención para un Funcionamiento Óptimo
@@ -139,7 +171,7 @@ export const Homepage = () => {
                 {thirdCardIsClicked ? (
                   <p className="mx-auto flex items-center justify-center gap-4  ">
                     <FaEyeSlash size={60} />
-                    <span className="opacity-0">Leer mas</span>
+                    <span className="opacity-0 hidden">Leer mas</span>
                   </p>
                 ) : (
                   <p className="mx-auto flex items-center justify-center   gap-4 ">
@@ -164,13 +196,107 @@ export const Homepage = () => {
             </div>
           </div>
         </section>
-        <Link to={"/outletzone/tienda"}>
-          {" "}
-          <img src="https://torrente15.files.wordpress.com/2023/11/19330956.jpg"></img>
-        </Link>
+
+        {/* End "a que nos dedicamos" section */}
+        {/* End "a que nos dedicamos" section */}
+        <h2 className="text-3xl font-semibold">Nuestros productos</h2>
+        <section className="max-w-7xl grid grid-cols-1 lg:grid lg:grid-cols-3 justify-center items-center mx-auto gap-8 p-8">
+          <div className="max-w-sm flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/27087-4218822791-e1700626787755.jpg"
+              className="w-52 h-52 mx-auto object-contain"
+            />
+            <div>
+              <h3 className="text-xl font-medium ">Neveras</h3>
+              <p>
+                Descubre la frescura en cada rincón de tu cocina con nuestras
+                neveras de última generación.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/27876-100293990-e1700626926871.jpg"
+              className="w-52 h-52 mx-auto object-contain"
+            />
+            <div>
+              <h3 className="text-xl font-medium">Lavadoras</h3>
+              <p>
+                Optimiza tu lavandería con nuestras lavadoras de alto
+                rendimiento. ¡Limpieza impecable en cada carga!
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-col gap-8 mx-auto ">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/phone-grey-background-4264967331-e1700628011415.jpg"
+              className="w-52 h-52 mx-auto object-contain"
+            />
+            <div>
+              {" "}
+              <h3 className="text-xl font-medium">Teléfonos</h3>
+              <p>
+                Descubre teléfonos inteligentes con diseño elegante y funciones
+                innovadoras.
+              </p>
+            </div>
+          </div>
+
+          <div className=" flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/pngimg.com-laptop_png5929.png"
+              className="w-52 h-52 mx-auto object-contain"
+            />
+            <div>
+              {" "}
+              <h3 className="text-xl font-medium">Computadoras</h3>
+              <p>
+                Potencia tu productividad con laptops de alto rendimiento y
+                confiabilidad.
+              </p>
+            </div>
+          </div>
+
+          <div className=" flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/pngimg.com-tv_png39222.png"
+              className="w-52 h-52 mx-auto object-contain"
+            />
+            <div>
+              {" "}
+              <h3 className="text-xl font-medium">Televisores</h3>
+              <p>
+                Experimenta la alta resolución y colores vibrantes de nuestros
+                televisores.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-xl flex flex-col gap-8 mx-auto">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/pngimg.com-stove_png13982.png"
+              className="w-52 h-52 mx-auto object-contain"
+            />
+            <div>
+              {" "}
+              <h3 className="text-xl font-medium">Estufas</h3>
+              <p>
+                Transforma tu cocina con estufas modernas y eficientes para una
+                experiencia placentera.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <div className="divider ">
+          <ArrowDown size={100} />
+        </div>
+        <LetsTalk />
+
         <h2 className="text-3xl">¿Por qué elegirnos?</h2>
         <section className="flex flex-col md:flex-row gap-4 px-8 relative">
-          <div className="glass bg-yellow-400 text-white p-8 text-start shadow-xl ">
+          <div className="glass card bg-yellow-400 text-white p-8 text-start shadow-xl ">
             <blockquote className="text-lg font-semibold">
               Experiencia Confiable
             </blockquote>
@@ -183,8 +309,8 @@ export const Homepage = () => {
             </p>
           </div>
 
-          <div className="divider divider-horizontal divider-neutral"></div>
-          <div className="glass bg-yellow-400 text-white p-8 text-start shadow-xl relative top-0 md:top-20">
+          <div className="divider divider-horizontal"></div>
+          <div className="glass card bg-yellow-400 text-white p-8 text-start shadow-xl relative top-0 md:top-20">
             <blockquote className="text-lg font-semibold">
               Servicio Rápido y Eficiente
             </blockquote>
@@ -196,9 +322,9 @@ export const Homepage = () => {
               posible, para que puedas disfrutar de la comodidad en tu hogar.
             </p>
           </div>
-          <div className="divider divider-horizontal divider-neutral"></div>
+          <div className="divider divider-horizontal "></div>
 
-          <div className="glass bg-yellow-400 text-white p-8 text-start shadow-xl relative ">
+          <div className="glass card bg-yellow-400 text-white p-8 text-start shadow-xl relative ">
             <blockquote className="text-lg font-semibold">
               Compromiso con la Satisfacción del Cliente
             </blockquote>
@@ -211,8 +337,27 @@ export const Homepage = () => {
             </p>
           </div>
         </section>
-        <div className="divider "></div>
+        {/* FAQ */}
+        {/* FAQ */}
+        {/* FAQ */}
+        <section className="mt-32">
+          <FAQ />
+        </section>
       </main>
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d4728.848634830479!2d-74.1039055734908!3d4.687757880216167!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNMKwNDEnMTcuOSJOIDc0wrAwNicxMC4xIlc!5e0!3m2!1sen!2sco!4v1700683132981!5m2!1sen!2sco"
+        height="450"
+        style={{ border: "0" }}
+        allowFullScreen={true}
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        className="w-full"
+      ></iframe>
+      <img
+        src="https://outletzone7.files.wordpress.com/2023/11/califica-1.jpg"
+        alt="Califica nuestro servicio"
+        className="bg-cover image-full "
+      />
     </article>
   );
 };

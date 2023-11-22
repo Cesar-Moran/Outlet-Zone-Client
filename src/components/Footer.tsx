@@ -5,9 +5,9 @@ import { RiInstagramFill } from "react-icons/ri";
 
 export const Footer = () => {
   return (
-    <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
+    <footer className="footer footer-center py-8 bg-[#090809] text-base-content ">
       <nav className="grid grid-flow-col gap-4">
-        <ul className="list-none flex flex-col md:flex-row gap-8">
+        <ul className="list-none grid grid-cols-1 md:grid-cols-3 gap-8">
           <li>
             <Link
               to={"/outletzone/contacto"}

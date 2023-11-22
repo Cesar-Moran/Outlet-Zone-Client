@@ -24,7 +24,7 @@ export const Navbar = () => {
             <a className="flex items-center mx-auto gap-4 cursor-default text-xl">
               {" "}
               <img
-                src="https://torrente15.files.wordpress.com/2023/11/397349151_1073498366921565_8115290529435045220_n-1.jpg"
+                src="https://outletzone7.files.wordpress.com/2023/11/397349151_1073498366921565_8115290529435045220_n-1.jpg"
                 className="w-16 h-16 rounded-lg"
               ></img>
             </a>
@@ -174,7 +174,7 @@ export const Navbar = () => {
             </details>
           </li>
           <li tabIndex={3}>
-            <a>Contáctanos</a>
+            <Link to={"/outletzone/contacto"}>Contáctanos</Link>
           </li>
         </ul>
       </div>
