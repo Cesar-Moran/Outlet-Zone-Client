@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { LetsTalk } from "../components/LetsTalk";
 import { FAQ } from "../components/FAQ";
+import Marquee from "react-fast-marquee";
+import { ProductsMarquee } from "../components/ProductsMarquee";
 
 export const Homepage = () => {
   const [firstCardIsClicked, setFirstCardClicked] = useState(true);
@@ -199,95 +201,10 @@ export const Homepage = () => {
 
         {/* End "a que nos dedicamos" section */}
         {/* End "a que nos dedicamos" section */}
-        <h2 className="text-3xl font-semibold">Nuestros productos</h2>
-        <section className="max-w-7xl grid grid-cols-1 lg:grid lg:grid-cols-3 justify-center items-center mx-auto gap-8 p-8">
-          <div className="max-w-sm flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
-            <img
-              src="https://outletzone7.files.wordpress.com/2023/11/27087-4218822791-e1700626787755.jpg"
-              className="w-52 h-52 mx-auto object-contain"
-            />
-            <div>
-              <h3 className="text-xl font-medium ">Neveras</h3>
-              <p>
-                Descubre la frescura en cada rincón de tu cocina con nuestras
-                neveras de última generación.
-              </p>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
-            <img
-              src="https://outletzone7.files.wordpress.com/2023/11/27876-100293990-e1700626926871.jpg"
-              className="w-52 h-52 mx-auto object-contain"
-            />
-            <div>
-              <h3 className="text-xl font-medium">Lavadoras</h3>
-              <p>
-                Optimiza tu lavandería con nuestras lavadoras de alto
-                rendimiento. ¡Limpieza impecable en cada carga!
-              </p>
-            </div>
-          </div>
-          <div className="flex flex-col gap-8 mx-auto ">
-            <img
-              src="https://outletzone7.files.wordpress.com/2023/11/phone-grey-background-4264967331-e1700628011415.jpg"
-              className="w-52 h-52 mx-auto object-contain"
-            />
-            <div>
-              {" "}
-              <h3 className="text-xl font-medium">Teléfonos</h3>
-              <p>
-                Descubre teléfonos inteligentes con diseño elegante y funciones
-                innovadoras.
-              </p>
-            </div>
-          </div>
-
-          <div className=" flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
-            <img
-              src="https://outletzone7.files.wordpress.com/2023/11/pngimg.com-laptop_png5929.png"
-              className="w-52 h-52 mx-auto object-contain"
-            />
-            <div>
-              {" "}
-              <h3 className="text-xl font-medium">Computadoras</h3>
-              <p>
-                Potencia tu productividad con laptops de alto rendimiento y
-                confiabilidad.
-              </p>
-            </div>
-          </div>
-
-          <div className=" flex flex-col gap-8 mx-auto border-r-0 lg:border-r-2">
-            <img
-              src="https://outletzone7.files.wordpress.com/2023/11/pngimg.com-tv_png39222.png"
-              className="w-52 h-52 mx-auto object-contain"
-            />
-            <div>
-              {" "}
-              <h3 className="text-xl font-medium">Televisores</h3>
-              <p>
-                Experimenta la alta resolución y colores vibrantes de nuestros
-                televisores.
-              </p>
-            </div>
-          </div>
-
-          <div className="rounded-xl flex flex-col gap-8 mx-auto">
-            <img
-              src="https://outletzone7.files.wordpress.com/2023/11/pngimg.com-stove_png13982.png"
-              className="w-52 h-52 mx-auto object-contain"
-            />
-            <div>
-              {" "}
-              <h3 className="text-xl font-medium">Estufas</h3>
-              <p>
-                Transforma tu cocina con estufas modernas y eficientes para una
-                experiencia placentera.
-              </p>
-            </div>
-          </div>
-        </section>
+        <div>
+          <h2 className="text-3xl font-semibold">Nuestros productos</h2>
+          <ProductsMarquee />
+        </div>
 
         <div className="divider ">
           <ArrowDown size={100} />
