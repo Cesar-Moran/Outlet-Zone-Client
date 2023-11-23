@@ -1,7 +1,6 @@
-import { ArrowDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import { LetsTalk } from "../components/LetsTalk";
 import { FAQ } from "../components/FAQ";
 import { ProductsMarquee } from "../components/ProductsMarquee";
