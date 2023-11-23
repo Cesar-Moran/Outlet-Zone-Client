@@ -4,12 +4,12 @@ export const FAQ = () => {
   return (
     <div className="max-w-3xl px-4 sm:px-6 lg:px-8  mx-auto text-start">
       <div className="max-w-2xl mx-auto mb-10 lg:mb-14">
-        <h2 className="text-2xl font-bold md:text-4xl md:leading-tight ">
+        <h2 className="text-2xl font-semibold md:text-4xl md:leading-tight ">
           Quizás te estás preguntando...
         </h2>
       </div>
 
-      <div className="max-w-2xl mx-auto divide-y divide-gray-200 dark:divide-gray-700">
+      <div className="max-w-2xl mx-auto divide-y divide-gray-200 ">
         <div className="py-8 first:pt-0 last:pb-0">
           <div className="flex gap-x-5">
             <svg
@@ -187,6 +187,12 @@ export const FAQ = () => {
             </div>
           </div>
         </div>
+      </div>
+      <div className="p-8 flex flex-col gap-4">
+        <h2 className="text-2xl font-semibold ">¿Sigues teniendo dudas?</h2>
+        <button className="btn btn-ghost rounded-none max-w-[10rem] bg-yellow-400">
+          Contáctanos
+        </button>
       </div>
     </div>
   );

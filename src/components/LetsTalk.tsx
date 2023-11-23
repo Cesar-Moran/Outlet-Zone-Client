@@ -5,7 +5,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 export const LetsTalk = () => {
   return (
-    <div className="border max-w-lg p-8 mx-8 card text-start md:mx-auto">
+    <div className="border max-w-lg p-8 mx-8  text-start md:mx-auto">
       <h2 className="text-xl font-medium">
         ¿Tienes dudas o necesitas consultar algo?
       </h2>
@@ -14,7 +14,7 @@ export const LetsTalk = () => {
           Envianos un mensaje por whatsapp y te responderemos lo más rapido que
           podamos!
         </p>
-        <button className="btn btn-ghost max-w-xl bg-green-500 text-white">
+        <button className="btn btn-ghost  rounded-none max-w-xl bg-green-500 text-white">
           <a
             href="https://wa.link/3nqq8z"
             target="_blank"

@@ -7,10 +7,6 @@ import { FAQ } from "../components/FAQ";
 import { ProductsMarquee } from "../components/ProductsMarquee";
 
 export const Homepage = () => {
-  const [firstCardIsClicked, setFirstCardClicked] = useState(true);
-  const [secondCardIsClicked, setSecondCardClicked] = useState(true);
-  const [thirdCardIsClicked, setThirdCardClicked] = useState(true);
-
   const images = [
     "https://outletzone7.files.wordpress.com/2023/11/22-1685985038-e1700626356471.jpg",
     "https://outletzone7.files.wordpress.com/2023/11/19330956-3284904655-e1700626312513.jpg",
@@ -32,125 +28,93 @@ export const Homepage = () => {
     };
   }, []);
 
-  const backgroundImageStyle = {
-    backgroundImage: `url(${images[currentImageIndex]})`,
-    backgroundSize: "contain",
-  };
-
   return (
-    <article className="z-10">
-      <section
-        className="hero min-h-screen bg-no-repeat sm:bg-repeat   "
-        style={backgroundImageStyle}
-      >
-        <div className="hero-overlay bg-opacity-60"></div>
-        <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md">
+    <article className="">
+      <section className="mb-24">
+        <img src={images[currentImageIndex]}></img>
+        <div className="container mx-auto pt-24">
+          <div className="flex flex-col px-4 md:flex-row justify-around  ">
+            {" "}
+            <h1 className="mb-5 text-5xl font-bold text-yellow-400 max-w-xl">
+              Descubre calidad y experiencia a tu servicio.
+            </h1>
             <div>
               {" "}
-              <h1 className="mb-5 text-5xl font-bold text-yellow-400">
-                Hola, bienvenido!
-              </h1>
-              <p className="mb-5 text-white">
-                Productos de calidad y reparaciones expertas para tu hogar.
-                Confía en nosotros, cuidamos de lo que más importa.
+              <p className="mb-5 text-black max-w-lg">
+                Confía en nosotros para productos de alta calidad y reparaciones
+                expertas en tu hogar. Somos tu socio dedicado, enfocados en
+                brindar soluciones duraderas y prácticas para cuidar lo que más
+                valoras.
               </p>
-              <Link to={"/outletzone/contacto"}>
-                <button className="btn bg-yellow-400 border-none text-white">
-                  Contactanos
-                </button>
-              </Link>
-            </div>
-            <div className="flex gap-4 items-center justify-center">
-              <ArrowDown className="animate-pulse translate-y-80" size={50} />
+              <div className="hero-buttons flex gap-4">
+                <Link to={"/outletzone/contacto"}>
+                  <button className="btn bg-yellow-400 rounded-none border-none text-white">
+                    Contactanos
+                  </button>
+                </Link>
+                <Link to={"/outletzone/contacto"}>
+                  <button className="btn bg-transparent border rounded-none border-yellow-400  text-yellow-400">
+                    Tienda
+                  </button>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
       </section>
-      <main className=" bg-white  flex flex-col gap-20 text-center py-20 text-black italic ">
-        <h2 className="text-3xl font-semibold ">¿A qué nos dedicamos?</h2>
-        <section className="px-8 flex flex-col md:flex-row gap-4 ">
-          {/* First card */}
-          {/* First card */}
-          {/* First card */}
-          {/* First card */}
-          <div className=" hero bg-yellow-500 text-white text-start shadow-xl rounded-3xl w-full bg-[url(https://outletzone7.files.wordpress.com/2023/11/woman-taking-out-eggs-from-fridge-morning-breakfast-housewife-getting-helthy-eggs-other-ingredients-from-refrigerator-her-kitchen.jpg)]">
-            <div className="hero-overlay bg-opacity-60 rounded-3xl"></div>
-            <div className="max-w-xl">
-              <blockquote className="text-lg font-semibold px-8 pt-8 ">
-                Electrodomésticos de Calidad para tu Hogar
-              </blockquote>
-              <div className="divider"></div>
-              <button
-                className="w-full"
-                onClick={() => setFirstCardClicked(!firstCardIsClicked)}
-              >
-                {firstCardIsClicked ? (
-                  <p className="mx-auto flex items-center justify-center gap-4  ">
-                    <FaEyeSlash size={60} />
-                    <span className="opacity-0 hidden">Leer mas</span>
-                  </p>
-                ) : (
-                  <p className="mx-auto flex items-center justify-center   gap-4 ">
-                    <FaEye size={60} />
-                    <span className="opacity-100 font-medium">Leer mas</span>
-                  </p>
-                )}
-              </button>
 
-              <p
-                className={
-                  firstCardIsClicked
-                    ? "translate-x-0 max-h-[400px] peer-focus:opacity-100  duration-200 p-8"
-                    : "opacity-0 max-h-[400px] -translate-x-3/4  duration-200 p-8"
-                }
-              >
-                Venta y reparación de electrodomésticos de calidad. Descubre
-                nuestra gama premium para tu hogar y obtén soluciones
-                confiables. Tu satisfacción es nuestra prioridad.
-              </p>
+      <main className=" bg-white  flex flex-col gap-20 text-center  text-black ">
+        <h2 className="text-5xl leading-normal font-semibold ">
+          ¿A qué nos dedicamos?
+        </h2>
+        <section className="px-4 flex flex-col  max-w-7xl mx-auto ">
+          {/* First card */}
+          {/* First card */}
+          {/* First card */}
+          {/* First card */}
+          <div className="flex flex-col md:flex-row items-center justify-evenly max-w-7xl mx-auto">
+            <div className="  text-black text-start  w-full">
+              <div className="max-w-xl flex flex-col text-start justify-center items-center mx-auto">
+                <blockquote className="text-2xl md:text-4xl font-semibold px-8 pt-8 ">
+                  Electrodomésticos de Calidad para tu Hogar
+                </blockquote>
+
+                <p className="text-lg max-h-[400px] duration-200 p-8">
+                  Venta y reparación de electrodomésticos de calidad. Descubre
+                  nuestra gama premium para tu hogar y obtén soluciones
+                  confiables. Tu satisfacción es nuestra prioridad.
+                </p>
+              </div>
             </div>
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/woman-taking-out-eggs-from-fridge-morning-breakfast-housewife-getting-helthy-eggs-other-ingredients-from-refrigerator-her-kitchen.jpg"
+              alt="Mujer abriendo una nevera en la cocina"
+              className="md:w-[682px] h-[382px] object-cover rounded-xl md:rounded-none"
+            ></img>
           </div>
 
           {/* Second card */}
           {/* Second card */}
           {/* Second card */}
           {/* Second card */}
-          <div className="hero  bg-[url(https://outletzone7.files.wordpress.com/2023/11/repairman-doing-air-conditioner-service.jpg)]  text-white text-start shadow-xl  rounded-3xl  w-full">
-            <div className="hero-overlay bg-opacity-60 rounded-3xl"></div>
-            <div className="max-w-xl ">
-              <blockquote className="text-lg font-semibold px-8 pt-8 ">
-                Reparación Confiable para tus Electrodomésticos
-              </blockquote>
-              <div className="divider"></div>
-              <button
-                className="w-full"
-                onClick={() => setSecondCardClicked(!secondCardIsClicked)}
-              >
-                {secondCardIsClicked ? (
-                  <p className="mx-auto flex items-center justify-center gap-4  ">
-                    <FaEyeSlash size={60} />
-                    <span className="opacity-0 hidden">Leer mas</span>
-                  </p>
-                ) : (
-                  <p className="mx-auto flex items-center justify-center   gap-4 ">
-                    <FaEye size={60} />
-                    <span className="opacity-100 font-medium">Leer mas</span>
-                  </p>
-                )}
-              </button>
+          <div className="flex flex-col-reverse md:flex-row items-center justify-evenly max-w-7xl mx-auto ">
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/repairman-doing-air-conditioner-service.jpg"
+              alt="Persona reparando un aire acondicionado"
+              className="md:w-[682px] h-[382px] object-cover rounded-xl md:rounded-none"
+            />
+            <div className=" text-black text-start  w-full">
+              <div className="max-w-xl flex flex-col text-start justify-center items-center mx-auto ">
+                <blockquote className="text-2xl md:text-4xl font-semibold px-8 pt-8">
+                  Reparación Confiable para tus Electrodomésticos
+                </blockquote>
 
-              <p
-                className={
-                  secondCardIsClicked
-                    ? "translate-x-0 max-h-[400px] peer-focus:opacity-100  duration-200 p-8"
-                    : "opacity-0 max-h-[400px] -translate-x-3/4  duration-200 p-8"
-                }
-              >
-                No dejes que un electrodoméstico averiado arruine tu día.
-                Nuestro equipo experto está aquí para reparar tus dispositivos
-                rápidamente. Funcionamiento óptimo, sin complicaciones
-              </p>
+                <p className="text-lg max-h-[400px]  duration-200 p-8">
+                  No dejes que un electrodoméstico averiado arruine tu día.
+                  Nuestro equipo experto está aquí para reparar tus dispositivos
+                  rápidamente. Funcionamiento óptimo, sin complicaciones
+                </p>
+              </div>
             </div>
           </div>
 
@@ -158,61 +122,40 @@ export const Homepage = () => {
           {/* Third card */}
           {/* Third card */}
           {/* Third card */}
-          <div className=" hero bg-[url(https://img.freepik.com/free-photo/portrait-attractive-hispanic-handyman-writing-work-estimate-before-fixing-kitchen-sink_662251-2690.jpg?w=1380&t=st=1700681444~exp=1700682044~hmac=99bbd26781998766013d742dfd4f67d76ac0897a83f43f0f48f14778f3c3e71b)]  text-white text-start shadow-xl  rounded-3xl w-full">
-            <div className="hero-overlay bg-opacity-60 rounded-3xl"></div>
-            <div className="max-w-xl">
-              <blockquote className="text-lg font-semibold px-8 pt-8 ">
-                Prevención para un Funcionamiento Óptimo
-              </blockquote>
-              <div className="divider"></div>
-              <button
-                className="w-full"
-                onClick={() => setThirdCardClicked(!thirdCardIsClicked)}
-              >
-                {thirdCardIsClicked ? (
-                  <p className="mx-auto flex items-center justify-center gap-4  ">
-                    <FaEyeSlash size={60} />
-                    <span className="opacity-0 hidden">Leer mas</span>
-                  </p>
-                ) : (
-                  <p className="mx-auto flex items-center justify-center   gap-4 ">
-                    <FaEye size={60} />
-                    <span className="opacity-100 font-medium">Leer mas</span>
-                  </p>
-                )}
-              </button>
+          <div className="flex flex-col md:flex-row items-center justify-evenly max-w-7xl mx-auto">
+            <div className="  text-black text-start  w-ful">
+              <div className="max-w-xl flex flex-col text-start justify-center items-center mx-auto">
+                <blockquote className="text-2xl md:text-4xl font-semibold px-8 pt-8 ">
+                  Prevención para un Funcionamiento Óptimo
+                </blockquote>
 
-              <p
-                className={
-                  thirdCardIsClicked
-                    ? "translate-x-0 max-h-[400px] peer-focus:opacity-100  duration-200 p-8"
-                    : "opacity-0 max-h-[400px] -translate-x-3/4  duration-200 p-8"
-                }
-              >
-                Previene problemas en tus electrodomésticos con nuestro
-                mantenimiento especializado para neveras, lavadoras y aires
-                acondicionados. Nuestro equipo asegura un rendimiento óptimo y
-                longevidad.
-              </p>
+                <p className="text-lg max-h-[400px]  duration-200 p-8">
+                  Previene problemas en tus electrodomésticos con nuestro
+                  mantenimiento especializado para neveras, lavadoras y aires
+                  acondicionados. Nuestro equipo asegura un rendimiento óptimo y
+                  longevidad.
+                </p>
+              </div>
             </div>
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/young-man-working-as-electrician-exposing-back-fridge-check-repair-it.jpg"
+              className="md:w-[682px] h-[382px] object-cover rounded-xl md:rounded-none "
+            ></img>
           </div>
         </section>
 
         {/* End "a que nos dedicamos" section */}
         {/* End "a que nos dedicamos" section */}
-        <div>
+        <div className="border-y py-8">
           <h2 className="text-3xl font-semibold">Nuestros productos</h2>
           <ProductsMarquee />
         </div>
 
-        <div className="divider ">
-          <ArrowDown size={100} />
-        </div>
         <LetsTalk />
 
-        <h2 className="text-3xl">¿Por qué elegirnos?</h2>
+        <h2 className="text-3xl font-semibold">¿Por qué elegirnos?</h2>
         <section className="flex flex-col md:flex-row gap-4 px-8 relative">
-          <div className="glass card bg-yellow-400 text-white p-8 text-start shadow-xl ">
+          <div className="glass  bg-yellow-400 text-white p-8 text-start shadow-xl ">
             <blockquote className="text-lg font-semibold">
               Experiencia Confiable
             </blockquote>
@@ -226,7 +169,7 @@ export const Homepage = () => {
           </div>
 
           <div className="divider divider-horizontal"></div>
-          <div className="glass card bg-yellow-400 text-white p-8 text-start shadow-xl relative top-0 md:top-20">
+          <div className="glass  bg-yellow-400 text-white p-8 text-start shadow-xl relative top-0 md:top-20">
             <blockquote className="text-lg font-semibold">
               Servicio Rápido y Eficiente
             </blockquote>
@@ -240,7 +183,7 @@ export const Homepage = () => {
           </div>
           <div className="divider divider-horizontal "></div>
 
-          <div className="glass card bg-yellow-400 text-white p-8 text-start shadow-xl relative ">
+          <div className="glass  bg-yellow-400 text-white p-8 text-start shadow-xl relative ">
             <blockquote className="text-lg font-semibold">
               Compromiso con la Satisfacción del Cliente
             </blockquote>
@@ -272,7 +215,7 @@ export const Homepage = () => {
       <img
         src="https://outletzone7.files.wordpress.com/2023/11/califica-1.jpg"
         alt="Califica nuestro servicio"
-        className="bg-cover image-full "
+        className="bg-cover w-full "
       />
     </article>
   );
