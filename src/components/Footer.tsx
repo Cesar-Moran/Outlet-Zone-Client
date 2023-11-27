@@ -5,7 +5,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 export const Footer = () => {
   return (
-    <footer className="footer footer-center py-8 bg-[#090809] text-base-content ">
+    <footer className="footer footer-center py-8 bg-[#090809] ">
       <nav className="grid grid-flow-col gap-4">
         <ul className="list-none grid grid-cols-1 md:grid-cols-3 gap-8">
           <li>

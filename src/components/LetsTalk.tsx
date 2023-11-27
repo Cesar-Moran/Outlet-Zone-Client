@@ -16,7 +16,7 @@ export const LetsTalk = () => {
         </p>
         <button className="btn btn-ghost  rounded-none max-w-xl bg-green-500 text-white">
           <a
-            href="https://wa.link/3nqq8z"
+            href="https://wa.link/z109k4"
             target="_blank"
             className="flex items-center gap-4 text-start  justify-start"
           >

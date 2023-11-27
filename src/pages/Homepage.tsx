@@ -1,36 +1,32 @@
 import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-
+import { useEffect, useState, useRef } from "react";
 import { LetsTalk } from "../components/LetsTalk";
 import { FAQ } from "../components/FAQ";
 import { ProductsMarquee } from "../components/ProductsMarquee";
+import { useToggleContext, useUserContext } from "../providers/UserProvider";
+
+interface User {
+  id: number;
+  email: string;
+  createdAt: any;
+  role: string;
+}
 
 export const Homepage = () => {
+  const user = useUserContext();
+
   const images = [
     "https://outletzone7.files.wordpress.com/2023/11/22-1685985038-e1700626356471.jpg",
     "https://outletzone7.files.wordpress.com/2023/11/19330956-3284904655-e1700626312513.jpg",
   ];
 
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      // Cambiar a la siguiente imagen en el array
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      );
-    }, 2000); // Cambia este valor a la cantidad de milisegundos que desees entre cambios de imagen
-
-    return () => {
-      // Limpiar el intervalo al desmontar el componente
-      clearInterval(intervalId);
-    };
-  }, []);
+  const [index, setIndex] = useState(0);
 
   return (
     <article className="">
       <section className="mb-24">
-        <img src={images[currentImageIndex]}></img>
+        <img src={images[index]} alt="" />
+
         <div className="container mx-auto pt-24">
           <div className="flex flex-col px-4 md:flex-row justify-around  ">
             {" "}

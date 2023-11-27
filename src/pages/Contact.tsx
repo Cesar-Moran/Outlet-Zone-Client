@@ -72,7 +72,7 @@ export const Contact = () => {
                 contactarnos fácilmente.
               </p>
             </div>
-            <div className="bg-white py-8 px-10 text-center  shadow-lg transform -translate-y-20 sm:-translate-y-24 max-w-xs mx-auto group">
+            <div className="bg-white py-8 px-10 text-center  shadow-lg transform -translate-y-20 sm:-translate-y-24 max-w-xs mx-auto hover:scale-105 duration-200 group">
               <h2 className="font-bold text-2xl mb-6  group-hover:translate-x-5 duration-200 bg-gradient-to-l from-blue-500 via-blue-500 to-blue-100 bg-clip-text  text-transparent">
                 Facebook
               </h2>
