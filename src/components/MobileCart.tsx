@@ -12,7 +12,7 @@ type Product = {
   product_quantity: number;
 };
 
-export const CartDropdown = () => {
+export const MobileCart = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   const getLocalStorage = () => {

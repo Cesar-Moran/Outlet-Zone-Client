@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import { MobileDropdown } from "./MobileNavbar";
 import { useUserContext } from "../providers/UserProvider";
 import { useEffect, useState } from "react";
-import { CartDropdown } from "./CartDropdown";
+import { DesktopCart } from "./DesktopCart";
 import { User } from "lucide-react";
-import { Test } from "./Test";
 
 export const Navbar = () => {
   const user = useUserContext();
@@ -142,7 +141,7 @@ export const Navbar = () => {
           )}
           <div className="flex ">
             {" "}
-            <Test />
+            <DesktopCart />
             <Link
               to={"/outletzone/contacto"}
               className="btn ml-4 my-0 bg-yellow-400  border-none text-white"

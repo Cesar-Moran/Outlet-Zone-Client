@@ -12,7 +12,7 @@ type Product = {
   product_quantity: number;
 };
 
-export const Test = () => {
+export const DesktopCart = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   const getLocalStorage = () => {
@@ -113,7 +113,7 @@ export const Test = () => {
         ></label>
 
         <ul className="menu min-h-full p-0 space-y-8 text-black bg-white  mb-4">
-          <div className="flex items-center   p-8">
+          <div className="flex items-center p-8">
             <label
               htmlFor="my-drawer-3"
               aria-label="close sidebar"
@@ -121,7 +121,7 @@ export const Test = () => {
             >
               <X className="text-yellow-500 hover:scale-125 duration-200" />
             </label>
-            <h1 className="text-xl lg:text-5xl mx-auto font-bold text-yellow-500">
+            <h1 className="text-xl lg:text-3xl mx-auto font-bold text-yellow-500">
               TU CARRITO ({products.length})
             </h1>
           </div>
