@@ -2,6 +2,7 @@ import React from "react";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../providers/UserProvider";
+import { CartDropdown } from "./CartDropdown";
 
 export const MobileDropdown = () => {
   const user = useUserContext();
@@ -115,10 +116,11 @@ export const MobileDropdown = () => {
                 <Link to={"/outletzone/contacto"}>Contáctanos</Link>
               </li>
             </div>
+            <CartDropdown />
             <div className="mt-8 ">
               {user ? (
-                <li className="btn mt-20 text-lg">
-                  <button onClick={logOut}>Log out</button>
+                <li className="btn  mt-20 text-lg" onClick={logOut}>
+                  <button>Log out</button>
                 </li>
               ) : (
                 <div className="flex flex-col gap-4">

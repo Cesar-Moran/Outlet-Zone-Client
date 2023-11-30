@@ -58,7 +58,7 @@ export const Homepage = () => {
         </div>
       </section>
 
-      <main className=" bg-white  flex flex-col gap-20 text-center  text-black ">
+      <main className="flex flex-col gap-20 text-center  text-black ">
         <h2 className="text-5xl leading-normal font-semibold ">
           ¿A qué nos dedicamos?
         </h2>
@@ -194,7 +194,12 @@ export const Homepage = () => {
         {/* FAQ */}
         {/* FAQ */}
         {/* FAQ */}
-        <section className="mt-32">
+        <section className="mt-32 flex justify-center items-center mx-auto ">
+          <img
+            src="https://outletzone7.files.wordpress.com/2023/11/faq.png"
+            alt="FAQ image"
+            className="h-[400px] w-[400px]"
+          />
           <FAQ />
         </section>
       </main>

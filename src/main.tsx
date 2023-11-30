@@ -12,9 +12,15 @@ import UserProvider from "./providers/UserProvider.tsx";
 import { UserPrivateRoutes } from "./private-routes/UserPrivateRoutes.tsx";
 import { AddProduct } from "./pages/AddProduct.tsx";
 import { AdminPrivateRoutes } from "./private-routes/AdminPrivateRoutes.tsx";
+import { Shop } from "./pages/Shop.tsx";
+import { Product } from "./pages/Product.tsx";
+import { PageNotFound } from "./components/PageNotFound.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
+
+const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
+  <QueryClientProvider client={queryClient}>
     <UserProvider>
       <Router>
         <Navbar />
@@ -22,6 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="/" element={<Homepage />} />
           <Route path="/outletzone/contacto" element={<Contact />} />
           <Route path="/outletzone/register" element={<Register />} />
+          <Route path="/outletzone/tienda" element={<Shop />} />
           <Route
             path="/outletzone/login"
             element={
@@ -38,9 +45,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               </AdminPrivateRoutes>
             }
           />
+          <Route path="/outletzone/tienda/producto/:id" element={<Product />} />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
         <Footer />
       </Router>
     </UserProvider>
-  </React.StrictMode>
+  </QueryClientProvider>
 );

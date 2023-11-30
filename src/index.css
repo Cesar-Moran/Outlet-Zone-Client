@@ -32,6 +32,7 @@ ol[role='list'] {
 body {
   min-height: 100vh;
   line-height: 1.5;
+  background-color: #f3f4f6;
 }
 
 /* Set shorter line heights on headings and interactive elements */
@@ -75,10 +76,7 @@ textarea:not([rows]) {
   scroll-margin-block: 5ex;
 }
 
-body {
-  background-color: white;
-}
- 
+
 details > summary {
   list-style: none;
 }

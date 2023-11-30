@@ -9,10 +9,48 @@ export const AddProduct = () => {
   const [product_description, setProductDescription] = useState("");
   const [product_condition, setProductCondition] = useState("");
   const [product_details, setProductDetails] = useState("");
+  const [product_guarantee, setProductGuarantee] = useState("");
+  const [category, setCategory] = useState("");
+  const [product_status, setProductStatus] = useState("");
+  console.log(product_status);
   const [product_image, setProductImage] = useState<File | null>(null);
 
+  const statusOptions = [
+    { optionText: "USADO" },
+    { optionText: "POCO USADO" },
+    { optionText: "CASI NUEVO" },
+    { optionText: "NUEVO" },
+  ];
+  const guaranteeOptions = [
+    { optionText: "SIN GARANTIA" },
+    { optionText: "CON GARANTIA" },
+  ];
+  const categoryOptions = [
+    { optionText: "NEVERA" },
+    { optionText: "LAVADORA" },
+    { optionText: "CELULAR" },
+    { optionText: "ESTUFA" },
+    { optionText: "TELEVISOR" },
+    { optionText: "LAPTOP/PC", value: "COMPUTADORA" },
+    { optionText: "ARTICULO PARA HOGAR", value: "ARTICULOPARAHOGAR" },
+  ];
+
+  const handleStatusSelect = (event: any) => {
+    setProductStatus(event.target.value);
+  };
+
+  const handleGuaranteeSelect = (event: any) => {
+    setProductGuarantee(event.target.value);
+  };
+
+  const handleCategorySelect = (event: any) => {
+    setCategory(event.target.value);
+  };
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     const { name, value } = e.target;
 
@@ -29,10 +67,11 @@ export const AddProduct = () => {
       case "product_shipping":
         setProductShipping(value);
         break;
-      // Add other cases if needed
+
       case "product_quantity":
         setProductQuantity(value);
         break;
+
       case "product_description":
         setProductDescription(value);
         break;
@@ -43,6 +82,9 @@ export const AddProduct = () => {
       case "product_details":
         setProductDetails(value);
         break;
+      case "category":
+        setCategory(value);
+        break;
 
       default:
         break;
@@ -52,7 +94,6 @@ export const AddProduct = () => {
   const onSubmit = async (ev: any) => {
     ev.preventDefault();
 
-    console.log("form submitted");
     const formData = new FormData();
     formData.append("product_name", product_name);
     formData.append("product_price", product_price);
@@ -62,16 +103,16 @@ export const AddProduct = () => {
     formData.append("product_description", product_description);
     formData.append("product_condition", product_condition);
     formData.append("product_details", product_details);
+    formData.append("product_status", product_status);
+    formData.append("product_guarantee", product_guarantee);
+    formData.append("category", category);
     product_image && formData.append("product_image", product_image);
 
     try {
-      console.log(formData);
-      const response = await fetch("http://localhost:4000/api/addProduct", {
+      await fetch("http://localhost:4000/api/addProduct", {
         method: "POST",
+
         body: formData,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
       });
     } catch (error) {
       console.error("Error al enviar la solicitud:", error);
@@ -79,16 +120,16 @@ export const AddProduct = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-center mx-auto items-center w-full">
+    <div className="min-h-screen flex flex-col justify-center mx-auto items-center w-full px-4">
       <form
-        className="flex flex-col gap-4 w-full max-w-5xl "
+        className="flex flex-col my-40 gap-4 w-full max-w-5xl text-black"
         onSubmit={onSubmit}
       >
         <input
           type="text"
           name="product_name"
           placeholder="Nombre del producto"
-          className="p-4 bg-transparent border "
+          className="p-4 bg-transparent border"
           onChange={handleChange}
         />
         <div className="number-inputs flex w-full gap-4 justify-between items-center">
@@ -117,15 +158,39 @@ export const AddProduct = () => {
         <input
           type="text"
           name="product_shipping"
-          placeholder="Envio hacia"
+          placeholder="Envio"
           className="p-4 bg-transparent border "
           onChange={handleChange}
         />
-        <input
-          type="text"
+        <div className="space-y-3 text-white">
+          <h2>El producto está usado, poco usado, casi nuevo o nuevo?</h2>
+
+          <select className="w-full select" onChange={handleStatusSelect}>
+            {statusOptions.map((option) => (
+              <option value={option.optionText}>{option.optionText}</option>
+            ))}
+          </select>
+          <select className="w-full select" onChange={handleGuaranteeSelect}>
+            {guaranteeOptions.map((option) => (
+              <option value={option.optionText}>{option.optionText}</option>
+            ))}
+          </select>
+          <select className="w-full select" onChange={handleCategorySelect}>
+            {categoryOptions.map((option) => (
+              <option value={option.value}>{option.optionText}</option>
+            ))}
+          </select>
+
+          <div className="text-black">
+            <p> {product_status}</p>
+            <p>{product_guarantee}</p>
+            <p>{category}</p>
+          </div>
+        </div>
+        <textarea
           name="product_description"
           placeholder="Descripción del producto"
-          className="p-4 bg-transparent border "
+          className="p-4 bg-transparent border text-black"
           onChange={handleChange}
         />
         <input
@@ -142,6 +207,17 @@ export const AddProduct = () => {
           className="p-4 bg-transparent border "
           onChange={handleChange}
         />{" "}
+        <input
+          type="file"
+          name="product_image"
+          id="image"
+          accept="image/*"
+          onChange={(event) => {
+            if (event.target.files && event.target.files.length > 0) {
+              setProductImage(event.target.files[0]);
+            }
+          }}
+        />
         <input type="submit" value="Submit" className="btn" />
       </form>
     </div>

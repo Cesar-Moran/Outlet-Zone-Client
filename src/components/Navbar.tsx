@@ -1,9 +1,12 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import { Link } from "react-router-dom";
-import { MobileDropdown } from "./MobileDropdown";
+import { MobileDropdown } from "./MobileNavbar";
 import { useUserContext } from "../providers/UserProvider";
 import { useEffect, useState } from "react";
+import { CartDropdown } from "./CartDropdown";
+import { User } from "lucide-react";
+import { Test } from "./Test";
 
 export const Navbar = () => {
   const user = useUserContext();
@@ -14,7 +17,7 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="w-full flex items-center justify-between lg:px-60  mx-auto p-2 fixed  z-50 bg-[#ffffff3f] backdrop-blur-lg text-black  ">
+    <nav className="w-full flex items-center justify-between lg:px-60  mx-auto p-2 sticky top-0  z-30 bg-[#ffffff3f] backdrop-blur-lg text-black  ">
       <MobileDropdown />
 
       <Link to={"/"} className="hidden lg:block">
@@ -102,21 +105,15 @@ export const Navbar = () => {
           </li>
           {user ? (
             <div className="flex items-center gap-3">
-              <div className="dropdown dropdown-end ">
+              <div className="dropdown dropdown-end  ">
                 <div
                   tabIndex={0}
                   role="button"
-                  className="btn btn-ghost btn-circle avatar"
+                  className="btn btn-ghost btn-circle hover:text-yellow-500 duration-200"
                 >
-                  <div className="w-10 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      src="https://outletzone7.files.wordpress.com/2023/11/e28094pngtreee28094oval-user-avatar-placeholder-black_6796229.png"
-                    />
-                  </div>
+                  <User />
                 </div>
                 <ul className="menu menu-sm text-white dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                  <li>eres {user.role}</li>
                   <li>
                     <button onClick={logOut}>Log out</button>
                   </li>
@@ -143,14 +140,16 @@ export const Navbar = () => {
               </li>
             </div>
           )}
-          <Link
-            to={"/outletzone/contacto"}
-            className="btn ml-4 my-0 bg-yellow-400  border-none text-white"
-          >
-            <li tabIndex={3} className="my-0">
-              Contáctanos
-            </li>
-          </Link>
+          <div className="flex ">
+            {" "}
+            <Test />
+            <Link
+              to={"/outletzone/contacto"}
+              className="btn ml-4 my-0 bg-yellow-400  border-none text-white"
+            >
+              <li className="my-0">Contáctanos</li>
+            </Link>
+          </div>
         </ul>
       </div>
     </nav>

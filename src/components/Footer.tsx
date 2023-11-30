@@ -5,7 +5,7 @@ import { RiInstagramFill } from "react-icons/ri";
 
 export const Footer = () => {
   return (
-    <footer className="footer footer-center py-8 bg-[#090809] ">
+    <footer className="footer footer-center py-8 bg-[#090809] relative z-50">
       <nav className="grid grid-flow-col gap-4">
         <ul className="list-none grid grid-cols-1 md:grid-cols-3 gap-8">
           <li>
@@ -104,7 +104,7 @@ export const Footer = () => {
         </div>
       </nav>
       <aside>
-        <p>Copyright © 2023 - All right reserved by Outlet Zone</p>
+        <p>Copyright © 2023 - Todos los derechos reservados por Outlet Zone</p>
       </aside>
     </footer>
   );
