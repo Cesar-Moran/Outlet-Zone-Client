@@ -32,9 +32,7 @@ export const Product = () => {
 
   const displayProduct = async () => {
     try {
-      const response = await fetch(
-        `http://localhost:4000/api/displaySingleProduct/${id}`
-      );
+      const response = await fetch(`/api/displaySingleProduct/${id}`);
 
       if (!response.ok) {
         throw new Error("Error fetching product data");
@@ -49,9 +47,7 @@ export const Product = () => {
 
   const addProductToCart = async (product: Product) => {
     // Verifica la disponibilidad del producto antes de agregarlo al carrito
-    const response = await fetch(
-      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
-    );
+    const response = await fetch(`/api/verifyProductQuantity/${product.id}`);
     const data = await response.json();
 
     // El usuario solo debe poder agregar la cantidad que esté disponible y no más de esa cantidad.

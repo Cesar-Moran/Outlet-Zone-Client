@@ -103,7 +103,7 @@ export const DesktopCart = () => {
 
   useEffect(() => {
     getLocalStorage();
-  }, [products]);
+  }, []);
 
   return (
     <div className="drawer drawer-end z-50 ">

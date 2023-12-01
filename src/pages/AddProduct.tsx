@@ -109,7 +109,7 @@ export const AddProduct = () => {
     product_image && formData.append("product_image", product_image);
 
     try {
-      await fetch("http://localhost:4000/api/addProduct", {
+      await fetch("/api/addProduct", {
         method: "POST",
 
         body: formData,

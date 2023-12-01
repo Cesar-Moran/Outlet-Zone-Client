@@ -18,7 +18,7 @@ export const RegisterRequests = () => {
       console.error(`No se encontró la solicitud con ID ${id}`);
       return;
     }
-    await fetch(`http://localhost:4000/api/acceptRequest/${id}`, {
+    await fetch(`/api/acceptRequest/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +28,7 @@ export const RegisterRequests = () => {
   };
 
   const getRegisterRequests = async () => {
-    const response = await fetch("http://localhost:4000/api/registerRequests");
+    const response = await fetch("/api/registerRequests");
     const data = await response.json();
     setRegisterRequests(data);
   };

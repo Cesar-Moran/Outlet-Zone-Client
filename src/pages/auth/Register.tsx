@@ -31,7 +31,7 @@ export const Register = () => {
 
   const onSubmit = async () => {
     console.log(user);
-    await fetch("http://localhost:4000/api/register", {
+    await fetch("/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

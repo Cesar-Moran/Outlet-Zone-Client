@@ -35,7 +35,7 @@ export const Shop = () => {
   const displayProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:4000/api/displayProducts");
+      const response = await fetch("/api/displayProducts");
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -56,9 +56,7 @@ export const Shop = () => {
   };
 
   const filterProductsByCategory = async (category: string) => {
-    const response = await fetch(
-      `http://localhost:4000/api/filterProductsByCategory/${category}`
-    );
+    const response = await fetch(`/api/filterProductsByCategory/${category}`);
 
     const data = await response.json();
     if (data.length <= 0) {
@@ -76,9 +74,7 @@ export const Shop = () => {
 
   const addProductToCart = async (product: Product) => {
     // Verifica la disponibilidad del producto antes de agregarlo al carrito
-    const response = await fetch(
-      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
-    );
+    const response = await fetch(`/api/verifyProductQuantity/${product.id}`);
     const data = await response.json();
 
     // El usuario solo debe poder agregar la cantidad que esté disponible y no más de esa cantidad.
