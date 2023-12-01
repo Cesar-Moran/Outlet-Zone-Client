@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 
 import { Link, useParams } from "react-router-dom";
@@ -31,11 +30,8 @@ export const Product = () => {
     imageUrl: "",
   });
 
-  const [isLoading, setLoading] = useState(false);
-
   const displayProduct = async () => {
     try {
-      setLoading(true);
       const response = await fetch(
         `http://localhost:4000/api/displaySingleProduct/${id}`
       );
@@ -46,9 +42,7 @@ export const Product = () => {
 
       const data = await response.json();
       setProduct(data);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.error("Error fetching product:", error);
     }
   };

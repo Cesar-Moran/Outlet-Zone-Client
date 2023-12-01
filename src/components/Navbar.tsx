@@ -1,9 +1,6 @@
-import { RxHamburgerMenu } from "react-icons/rx";
-
 import { Link } from "react-router-dom";
 import { MobileNavbar } from "./MobileNavbar";
 import { useUserContext } from "../providers/UserProvider";
-
 import { DesktopCart } from "./DesktopCart";
 import { User } from "lucide-react";
 

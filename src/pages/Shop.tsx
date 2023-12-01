@@ -31,8 +31,6 @@ export const Shop = () => {
 
   const [isLoading, setIsLoading] = useState(false);
 
-  const [cart, setCart] = useState<Product[]>([]);
-
   const [emptyList, setEmptyList] = useState(false);
   const displayProducts = async () => {
     try {
@@ -113,7 +111,7 @@ export const Shop = () => {
     }
 
     // Actualiza el estado y guarda el carrito en el localStorage
-    setCart(existingCart);
+
     localStorage.setItem("cart", JSON.stringify(existingCart));
   };
 
