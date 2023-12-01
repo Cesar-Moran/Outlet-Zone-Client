@@ -1,9 +1,9 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 
 import { Link } from "react-router-dom";
-import { MobileDropdown } from "./MobileNavbar";
+import { MobileNavbar } from "./MobileNavbar";
 import { useUserContext } from "../providers/UserProvider";
-import { useEffect, useState } from "react";
+
 import { DesktopCart } from "./DesktopCart";
 import { User } from "lucide-react";
 
@@ -16,15 +16,11 @@ export const Navbar = () => {
   };
 
   return (
-    <nav className="w-full flex items-center justify-between lg:px-60  mx-auto p-2 sticky top-0  z-30 bg-[#ffffff3f] backdrop-blur-lg text-black  ">
-      <MobileDropdown />
+    <nav className="w-full flex items-center justify-between lg:px-60  mx-auto p-2 fixed top-0  z-30 bg-[#ffffff3f] backdrop-blur-lg text-black  ">
+      <MobileNavbar />
 
-      <Link to={"/"} className="hidden lg:block">
-        <img
-          src="https://outletzone7.files.wordpress.com/2023/11/397349151_1073498366921565_8115290529435045220_n-1.jpg"
-          alt="OutletZone logo"
-          className="h-12 w-12 rounded-lg"
-        />
+      <Link to={"/"} className="hidden lg:block text-xl font-bold font-mono">
+        <p>Outlet Zone</p>
       </Link>
 
       <div className="navbar-center justify-between hidden lg:flex   ">
@@ -114,9 +110,21 @@ export const Navbar = () => {
                 </div>
                 <ul className="menu menu-sm text-white dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
                   <li>
+                    <button>{user.role}</button>
+                  </li>
+                  {user.role === "DEV" ? (
+                    <li>
+                      <Link to={"/outletzone/dev/registerRequests"}>
+                        Register requests
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                  <li>
                     <button onClick={logOut}>Log out</button>
                   </li>
-                  {user.role === "ADMIN" ? (
+                  {user.role === "ADMIN" || "DEV" ? (
                     <li>
                       <Link to={"/outletzone/admin/añadir-producto"}>
                         Añadir un producto
@@ -129,15 +137,7 @@ export const Navbar = () => {
               </div>
             </div>
           ) : (
-            <div className="flex gap-4 ">
-              {" "}
-              <li className="border rounded-lg btn btn-sm text-white">
-                <Link to={"/outletzone/register"}>Registrarse</Link>
-              </li>
-              <li className="border rounded-lg  btn btn-sm text-white">
-                <Link to={"/outletzone/login"}>Login</Link>
-              </li>
-            </div>
+            ""
           )}
           <div className="flex ">
             {" "}

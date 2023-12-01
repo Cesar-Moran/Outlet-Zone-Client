@@ -5,6 +5,7 @@ import { useState } from "react";
 import { schemaRegister } from "../../components/schemas/schemaRegister";
 import { ErrorMessage } from "@hookform/error-message";
 import { Link } from "react-router-dom";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const Register = () => {
   const [user, setUser] = useState({
@@ -12,6 +13,8 @@ export const Register = () => {
     password: "",
     confirm_password: "",
   });
+
+  const [capVal, setCapVal] = useState(null);
 
   const {
     register,
@@ -171,10 +174,15 @@ export const Register = () => {
               </div>
               <button
                 type="submit"
-                className="w-full text-white bg-yellow-400 hover:bg-primary00 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full disabled:bg-opacity-60 text-white bg-yellow-400 hover:bg-primary00 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                disabled={!capVal}
               >
                 Crear cuenta
               </button>
+              <ReCAPTCHA
+                sitekey="6LdKHiIpAAAAAB6J_D_R63LXH4PNOKWJOD62hW5I"
+                onChange={(val: any) => setCapVal(val)}
+              />
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Ya tienes una cuenta?{" "}
                 <Link

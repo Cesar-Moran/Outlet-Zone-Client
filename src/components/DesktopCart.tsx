@@ -16,6 +16,7 @@ export const DesktopCart = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   const getLocalStorage = () => {
+    // Get the localStorage item "cart"
     const storedProducts = localStorage.getItem("cart");
     const parsedProducts = storedProducts ? JSON.parse(storedProducts) : [];
     setProducts(products);
@@ -78,6 +79,7 @@ export const DesktopCart = () => {
       localStorage.setItem("cart", JSON.stringify(parsedProducts));
     }
   };
+
   const getCartTotal = () => {
     return products
       .reduce((total, product) => {
@@ -89,9 +91,21 @@ export const DesktopCart = () => {
       .toLocaleString("es-CO", { style: "currency", currency: "COP" });
   };
 
+  const createWhatsAppMessage = () => {
+    const message = products
+      .map((product) => {
+        return `*${product.product_name}: ${product.product_quantity} x ${product.product_price}*`;
+      })
+      .join("%0A");
+
+    const totalMessage = `%0A%0A*Total:* ${getCartTotal()}`;
+
+    return `Hola!%20Mi%20pedido%20es:${message}${totalMessage}`;
+  };
+
   useEffect(() => {
     getLocalStorage();
-  }, []);
+  }, [products]);
 
   return (
     <div className="drawer drawer-end z-50 ">
@@ -112,7 +126,7 @@ export const DesktopCart = () => {
           className="drawer-overlay"
         ></label>
 
-        <ul className="menu min-h-full p-0 space-y-8 text-black bg-white  mb-4">
+        <ul className="menu min-h-full w-full max-w-lg p-0 space-y-8 text-black bg-white  mb-4">
           <div className="flex items-center p-8">
             <label
               htmlFor="my-drawer-3"
@@ -143,11 +157,11 @@ export const DesktopCart = () => {
                   ${product.product_price}
                 </p>
 
-                <div className="flex flex-col lg:flex-row items-center gap-4 ">
-                  <div className=" flex items-center gap-8 border p-4 lg:p-8 rounded-full flex-wrap ">
+                <div className="flex  items-center gap-4 ">
+                  <div className=" flex  items-center gap-8 border p-4 lg:p-4 rounded-full flex-wrap ">
                     <button
                       className=" mx-auto"
-                      disabled={product.product_quantity === 0}
+                      disabled={product.product_quantity === 1}
                       onClick={() => decreaseQuantity(product)}
                     >
                       <MinusIcon />
@@ -179,9 +193,13 @@ export const DesktopCart = () => {
               <p className="text-lg font-bold flex justify-between items-center uppercase">
                 Total: <span> {getCartTotal()}</span>
               </p>
-              <button className="flex  items-center gap-2 z-50  rounded-full py-3 font-medium px-3 w-full mx-auto text-black border hover:bg-black hover:text-white  duration-200 leading-normal text-lg justify-center uppercase">
+              <a
+                target="_blank"
+                href={`https://api.whatsapp.com/send?phone=573176378584&text=${createWhatsAppMessage()}`}
+                className="flex items-center gap-2 z-50  rounded-full py-3 font-medium px-3 w-full mx-auto text-black border hover:bg-black hover:text-white  duration-200 leading-normal text-lg justify-center uppercase"
+              >
                 Finalizar
-              </button>
+              </a>
             </div>
           </div>
         </ul>

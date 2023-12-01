@@ -1,25 +1,25 @@
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { schemaRegister } from "../../components/schemas/schemaRegister";
 import { ErrorMessage } from "@hookform/error-message";
 import { Link, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  const [capVal, setCapVal] = useState(null);
 
   const navigateTo = useNavigate();
 
   const {
     register,
     handleSubmit,
-    formState: { isDirty, errors },
-    setValue,
+    formState: { errors },
   } = useForm({
     reValidateMode: "onChange",
     resolver: yupResolver(schemaRegister),
@@ -43,7 +43,7 @@ export const Login = () => {
           console.log("Logueado");
           return response.json(); // Parse the response JSON
         } else {
-          console.log("Hubo un problema tio");
+          console.log("Hubo un problema :(");
         }
       })
       .then((data) => {
@@ -55,20 +55,8 @@ export const Login = () => {
 
   return (
     <section className="bg-gray-50 ">
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme="light"
-      />
       {/* Same as */}
-      <ToastContainer />
+
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
@@ -132,13 +120,17 @@ export const Login = () => {
                   )}
                 />
               </div>
-
               <button
                 type="submit"
-                className="w-full text-white bg-yellow-400 hover:bg-primary00 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full disabled:bg-opacity-60 text-white bg-yellow-400 hover:bg-primary00 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                disabled={!capVal}
               >
-                Crear cuenta
+                Iniciar sesión
               </button>
+              <ReCAPTCHA
+                sitekey="6LdKHiIpAAAAAB6J_D_R63LXH4PNOKWJOD62hW5I"
+                onChange={(val: any) => setCapVal(val)}
+              />
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                 Ya tienes una cuenta?{" "}
                 <Link

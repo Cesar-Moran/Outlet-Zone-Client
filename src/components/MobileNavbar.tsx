@@ -4,14 +4,14 @@ import { Link } from "react-router-dom";
 import { useUserContext } from "../providers/UserProvider";
 import { MobileCart } from "./MobileCart";
 
-export const MobileDropdown = () => {
+export const MobileNavbar = () => {
   const user = useUserContext();
   const logOut = () => {
     localStorage.removeItem("token");
     window.location.reload();
   };
   return (
-    <div className="navbar-start lg:hidden w-full md:w-[100%] ">
+    <div className="navbar-start sticky top-0 lg:hidden w-full md:w-[100%] ">
       <div className="drawer lg:hidden ">
         <input id="my-drawer" type="checkbox" className="drawer-toggle " />
         <div className="drawer-content flex justify-between">
@@ -118,19 +118,33 @@ export const MobileDropdown = () => {
             </div>
             <MobileCart />
             <div className="mt-8 ">
-              {user ? (
-                <li className="btn  mt-20 text-lg" onClick={logOut}>
-                  <button>Log out</button>
-                </li>
-              ) : (
-                <div className="flex flex-col gap-4">
-                  {" "}
-                  <li className="border rounded-lg btn btn-sm text-white">
-                    <Link to={"/outletzone/register"}>Registrarse</Link>
+              {user && (
+                <div>
+                  <li>
+                    <button>{user.role}</button>
+                    <button>{user.email}</button>
                   </li>
-                  <li className="border rounded-lg  btn btn-sm text-white">
-                    <Link to={"/outletzone/login"}>Login</Link>
+                  {user.role === "DEV" ? (
+                    <li>
+                      <Link to={"/outletzone/dev/registerRequests"}>
+                        Register requests
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
+                  <li>
+                    <button onClick={logOut}>Log out</button>
                   </li>
+                  {user.role === "ADMIN" || "DEV" ? (
+                    <li>
+                      <Link to={"/outletzone/admin/añadir-producto"}>
+                        Añadir un producto
+                      </Link>
+                    </li>
+                  ) : (
+                    ""
+                  )}
                 </div>
               )}
             </div>

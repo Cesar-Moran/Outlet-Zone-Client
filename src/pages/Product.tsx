@@ -3,6 +3,15 @@ import { useState, useEffect } from "react";
 
 import { Link, useParams } from "react-router-dom";
 
+type Product = {
+  id: string;
+  product_name: string;
+  product_price: number;
+  product_status: string;
+  imageUrl: string;
+  product_quantity: number;
+};
+
 export const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState({
@@ -44,6 +53,47 @@ export const Product = () => {
     }
   };
 
+  const addProductToCart = async (product: Product) => {
+    // Verifica la disponibilidad del producto antes de agregarlo al carrito
+    const response = await fetch(
+      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
+    );
+    const data = await response.json();
+
+    // El usuario solo debe poder agregar la cantidad que esté disponible y no más de esa cantidad.
+
+    // Obtén el carrito actual del localStorage
+    const existingCart = JSON.parse(
+      localStorage.getItem("cart") || "[]"
+    ) as Product[];
+
+    // Busca si el producto ya está en el carrito
+    const existingProduct = existingCart.find((p) => p.id === product.id);
+
+    if (existingProduct) {
+      const totalQuantity =
+        existingProduct.product_quantity + product.product_quantity;
+
+      if (totalQuantity > data.quantityAvailable) {
+        throw new Error("No puedes agregar más del mismo producto");
+      }
+
+      // Si el producto ya está en el carrito y no supera la disponibilidad, incrementa la cantidad
+      existingProduct.product_quantity = totalQuantity;
+    } else {
+      if (product.product_quantity > data.quantityAvailable) {
+        throw new Error("No puedes agregar más del mismo producto");
+      }
+
+      // Si el producto no está en el carrito, agrégalo al carrito
+      existingCart.push(product);
+    }
+
+    // Actualiza el estado y guarda el carrito en el localStorage
+
+    localStorage.setItem("cart", JSON.stringify(existingCart));
+  };
+
   useEffect(() => {
     displayProduct();
   }, [id]);
@@ -82,7 +132,10 @@ export const Product = () => {
             </div>
             <div className="flex -mx-2  gap-4 ">
               <div className="w-1/2 px-2">
-                <button className="w-full btn border-none  dark:bg-yellow-400 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                <button
+                  onClick={() => addProductToCart(product)}
+                  className="w-full btn border-none  dark:bg-yellow-400 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
+                >
                   Añadir al carrito
                 </button>
               </div>

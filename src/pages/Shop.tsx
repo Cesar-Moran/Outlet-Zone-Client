@@ -122,7 +122,7 @@ export const Shop = () => {
   }, []);
 
   return (
-    <div className="min-h-screen container flex flex-col lg:flex-row   justify-around py-0 gap-4  items-center mx-auto  text-center ">
+    <div className="min-h-screen container flex flex-col lg:flex-row   justify-around py-24 sm:py-24 gap-4  items-center mx-auto  text-center ">
       <div className=" lg:fixed top-24 left-0 px-12  lg:z-40 ">
         <div className="filter-rules w-full max-w-sm flex flex-col gap-4">
           {" "}
