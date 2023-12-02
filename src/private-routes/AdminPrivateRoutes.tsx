@@ -4,5 +4,5 @@ import { Navigate } from "react-router-dom";
 export const AdminPrivateRoutes = ({ children }: any) => {
   const user = useUserContext();
 
-  return user?.role === "ADMIN" ? children : <Navigate to={"/"} />;
+  return user?.role === "ADMIN" || "DEV" ? children : <Navigate to={"/"} />;
 };
