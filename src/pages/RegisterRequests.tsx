@@ -18,13 +18,16 @@ export const RegisterRequests = () => {
       console.error(`No se encontró la solicitud con ID ${id}`);
       return;
     }
-    await fetch(`/api/acceptRequest/${id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestToAccept),
-    });
+    await fetch(
+      `https://outletzone-server.onrender.com/api/acceptRequest/${id}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestToAccept),
+      }
+    );
   };
 
   const getRegisterRequests = async () => {
