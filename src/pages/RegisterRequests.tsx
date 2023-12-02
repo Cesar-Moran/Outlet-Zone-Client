@@ -28,7 +28,9 @@ export const RegisterRequests = () => {
   };
 
   const getRegisterRequests = async () => {
-    const response = await fetch("/api/registerRequests");
+    const response = await fetch(
+      "https://outletzone-server.onrender.com/api/registerRequests"
+    );
     const data = await response.json();
     setRegisterRequests(data);
   };

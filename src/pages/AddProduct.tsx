@@ -109,7 +109,7 @@ export const AddProduct = () => {
     product_image && formData.append("product_image", product_image);
 
     try {
-      await fetch("/api/addProduct", {
+      await fetch("https://outletzone-server.onrender.com/api/addProduct", {
         method: "POST",
 
         body: formData,

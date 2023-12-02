@@ -31,7 +31,7 @@ export const Login = () => {
   };
 
   const onSubmit = async () => {
-    await fetch("/api/login", {
+    await fetch("https://outletzone-server.onrender.com/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -40,7 +40,6 @@ export const Login = () => {
     })
       .then((response) => {
         if (response.status === 200) {
-          console.log("Logueado");
           return response.json(); // Parse the response JSON
         } else {
           console.log("Hubo un problema :(");
