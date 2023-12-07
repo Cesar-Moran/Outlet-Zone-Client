@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 import { Toaster, toast } from "react-hot-toast";
 import { AddProductToast } from "../components/AddProductToast";
 import { Loader2 } from "lucide-react";
@@ -13,7 +14,7 @@ export const AddProduct = () => {
   const [product_description, setProductDescription] = useState("");
   const [product_condition, setProductCondition] = useState("");
   const [product_details, setProductDetails] = useState("");
-  const [product_guarantee, setProductGuarantee] = useState("");
+  const [product_guarantee, setProductGuarantee] = useState("CONGARANTIA");
   const [category, setCategory] = useState("");
   const [product_status, setProductStatus] = useState("");
   console.log(product_status);
