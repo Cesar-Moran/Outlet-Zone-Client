@@ -17,7 +17,6 @@ import { Product } from "./pages/Product.tsx";
 import { PageNotFound } from "./components/PageNotFound.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RegisterRequests } from "./pages/RegisterRequests.tsx";
-import { DevPrivateRoutes } from "./private-routes/DevPrivateRoutes.tsx";
 
 const queryClient = new QueryClient();
 
