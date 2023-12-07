@@ -1,6 +1,6 @@
 import { MinusIcon, PlusIcon, X } from "lucide-react";
 import { useState, useEffect } from "react";
-import { FaCartPlus } from "react-icons/fa";
+import { IoMdCart } from "react-icons/io";
 
 type Product = {
   id: string;
@@ -17,7 +17,6 @@ export const DesktopCart = () => {
     // Get the localStorage item "cart"
     const storedProducts = localStorage.getItem("cart");
     const parsedProducts = storedProducts ? JSON.parse(storedProducts) : [];
-    setProducts(products);
     setProducts(parsedProducts);
   };
 
@@ -27,34 +26,39 @@ export const DesktopCart = () => {
       ? JSON.parse(storedProducts)
       : [];
 
-    // Encuentra el producto específico en el array
+    // Find the specific product in the array
     const existingProduct = parsedProducts.find((p) => p.id === product.id);
 
     if (existingProduct) {
-      // Aumenta la cantidad del producto específico
+      // Increase the quantity of the specific product
       existingProduct.product_quantity += 1;
 
-      // Actualiza el estado y vuelve a guardar en localStorage
-      setProducts([...parsedProducts]);
+      // Update local storage immediately
       localStorage.setItem("cart", JSON.stringify(parsedProducts));
+
+      // Fetch the updated data from local storage
+      getLocalStorage();
     }
   };
+
   const decreaseQuantity = (product: Product) => {
     const storedProducts = localStorage.getItem("cart");
     let parsedProducts: Product[] = storedProducts
       ? JSON.parse(storedProducts)
       : [];
 
-    // Encuentra el producto específico en el array
+    // Find the specific product in the array
     const existingProduct = parsedProducts.find((p) => p.id === product.id);
 
     if (existingProduct) {
-      // Aumenta la cantidad del producto específico
+      // Decrease the quantity of the specific product
       existingProduct.product_quantity -= 1;
 
-      // Actualiza el estado y vuelve a guardar en localStorage
-      setProducts([...parsedProducts]);
+      // Update local storage immediately
       localStorage.setItem("cart", JSON.stringify(parsedProducts));
+
+      // Fetch the updated data from local storage
+      getLocalStorage();
     }
   };
 
@@ -70,11 +74,12 @@ export const DesktopCart = () => {
 
     if (productToRemove !== -1) {
       parsedProducts.splice(productToRemove, 1);
-      // Actualiza el estado del carrito
-      setProducts([...parsedProducts]);
 
-      // Guarda en el LocalStorage
+      // Update local storage immediately
       localStorage.setItem("cart", JSON.stringify(parsedProducts));
+
+      // Fetch the updated data from local storage
+      getLocalStorage();
     }
   };
 
@@ -92,7 +97,7 @@ export const DesktopCart = () => {
   const createWhatsAppMessage = () => {
     const message = products
       .map((product) => {
-        return `*${product.product_name}: ${product.product_quantity} x ${product.product_price}*`;
+        return `*${product.product_name}: ${product.product_quantity} x $${product.product_price}*`;
       })
       .join("%0A");
 
@@ -103,6 +108,16 @@ export const DesktopCart = () => {
 
   useEffect(() => {
     getLocalStorage();
+    const handleCartUpdate = () => {
+      getLocalStorage();
+    };
+
+    window.addEventListener("cartUpdate", handleCartUpdate);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("cartUpdate", handleCartUpdate);
+    };
   }, []);
 
   return (
@@ -112,9 +127,12 @@ export const DesktopCart = () => {
         {/* Page content here */}
         <label
           htmlFor="my-drawer-3"
-          className="drawer-button  btn-ghost btn-circle  shadow-none bg-transparent border-none hover:text-yellow-400  text-lg  rounded-full btn btn-primary"
+          className={`drawer-button  btn-ghost btn-circle  shadow-none bg-transparent border-none hover:text-yellow-400  text-lg  rounded-full btn btn-primary`}
         >
-          <FaCartPlus />
+          <IoMdCart className="" size={30} />
+          <div className="absolute text-white translate-y-3 p-1 translate-x-3 bg-red-500 rounded-full text-xs">
+            {products.length}
+          </div>
         </label>
       </div>
       <div className="drawer-side ">
@@ -133,7 +151,7 @@ export const DesktopCart = () => {
             >
               <X className="text-yellow-500 hover:scale-125 duration-200" />
             </label>
-            <h1 className="text-xl lg:text-3xl mx-auto font-bold text-yellow-500">
+            <h1 className="text-xl lg:text-3xl mx-auto font-bold text-yellow-500 font-mono">
               TU CARRITO ({products.length})
             </h1>
           </div>
@@ -141,7 +159,7 @@ export const DesktopCart = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="flex flex-col lg:flex-row items-center p-0 gap-8"
+              className="flex flex-col lg:flex-row items-center p-0 gap-8 px-4"
             >
               <img
                 src={product.imageUrl}
@@ -155,8 +173,8 @@ export const DesktopCart = () => {
                   ${product.product_price}
                 </p>
 
-                <div className="flex  items-center gap-4 ">
-                  <div className=" flex  items-center gap-8 border p-4 lg:p-4 rounded-full flex-wrap ">
+                <div className="flex flex-col items-center gap-4 ">
+                  <div className=" flex  items-center gap-8 border p-4  rounded-full  ">
                     <button
                       className=" mx-auto"
                       disabled={product.product_quantity === 1}
@@ -185,7 +203,7 @@ export const DesktopCart = () => {
               <div className="divider "></div>
             </div>
           ))}
-          <div className="w-full px-8 pb-8 lg:fixed lg:bottom-1 ">
+          <div className="w-full px-8 pb-8  ">
             <div className="space-y-4 w-full mx-auto ">
               {" "}
               <p className="text-lg font-bold flex justify-between items-center uppercase">

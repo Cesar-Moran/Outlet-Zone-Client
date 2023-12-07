@@ -1,3 +1,4 @@
+import { LoaderIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -35,9 +36,7 @@ export const Shop = () => {
   const displayProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(
-        "https://outletzone-server.onrender.com/api/displayProducts"
-      );
+      const response = await fetch("http://localhost:4000/api/displayProducts");
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -59,7 +58,20 @@ export const Shop = () => {
 
   const filterProductsByCategory = async (category: string) => {
     const response = await fetch(
-      `https://outletzone-server.onrender.com/api/filterProductsByCategory/${category}`
+      `http://localhost:4000/api/filterProductsByCategory/${category}`
+    );
+
+    const data = await response.json();
+    if (data.length <= 0) {
+      setEmptyList(true);
+    } else {
+      setEmptyList(false);
+    }
+    setProducts(data);
+  };
+  const filterProductsByGuarantee = async (guarantee: string) => {
+    const response = await fetch(
+      `http://localhost:4000/api/filterProductsByGuarantee/${guarantee}`
     );
 
     const data = await response.json();
@@ -76,10 +88,17 @@ export const Shop = () => {
     filterProductsByCategory(selectedCategory);
   };
 
+  const handleGuaranteeChange = (event: any) => {
+    const selectedGuarantee = event.target.value;
+    filterProductsByGuarantee(selectedGuarantee);
+  };
+
+  const cartUpdateEvent = new Event("cartUpdate");
+
   const addProductToCart = async (product: Product) => {
     // Verifica la disponibilidad del producto antes de agregarlo al carrito
     const response = await fetch(
-      `https://outletzone-server.onrender.com/api/verifyProductQuantity/${product.id}`
+      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
     );
     const data = await response.json();
 
@@ -115,6 +134,7 @@ export const Shop = () => {
     // Actualiza el estado y guarda el carrito en el localStorage
 
     localStorage.setItem("cart", JSON.stringify(existingCart));
+    window.dispatchEvent(cartUpdateEvent);
   };
 
   useEffect(() => {
@@ -122,99 +142,116 @@ export const Shop = () => {
   }, []);
 
   return (
-    <div className="min-h-screen container flex flex-col lg:flex-row   justify-around py-24 sm:py-24 gap-4  items-center mx-auto  text-center ">
-      <div className=" lg:fixed top-24 left-0 px-12  lg:z-40 ">
-        <div className="filter-rules w-full max-w-sm flex flex-col gap-4">
-          {" "}
+    <div className="min-h-screen  flex flex-col  xl:flex-row container  justify-around py-24 sm:py-24 gap-4  items-center  text-center ">
+      <div className=" xl:fixed top-24 left-0 px-12  lg:z-40 flex items-center  flex-col  xl:border-e xl:border-gray-300 h-full">
+        <div className="filter-rules w-full  max-w-sm flex flex-col gap-4">
           <div className="flex flex-col">
-            <h1 className="text-2xl">Filtrar por: </h1>
+            <h1 className="text-2xl" role="heading">
+              Filtrar por:{" "}
+            </h1>
             <button onClick={displayProducts} className="text-xl">
               Resetear
             </button>
           </div>
-          <select className=" mx-auto select" onChange={handleCategoryChange}>
-            <option disabled selected>
-              CATEGORIA
-            </option>
-            <option value="NEVERA">NEVERAS</option>
-            <option value="ESTUFA">ESTUFAS</option>
-            <option value="TELEFONO">TELEFONO</option>
-            <option value="COMPUTADORA">COMPUTADORA</option>
-          </select>
+          <div className="flex flex-col gap-8">
+            <select className=" mx-auto select" onChange={handleCategoryChange}>
+              <option disabled selected>
+                CATEGORIA
+              </option>
+              <option value="NEVERA">NEVERAS</option>
+              <option value="ESTUFA">ESTUFAS</option>
+              <option value="TELEFONO">TELEFONOS</option>
+              <option value="COMPUTADORA">COMPUTADORAS</option>
+              <option value="LAVADORA">LAVADORAS</option>
+            </select>
+
+            <select className="mx-auto select" onChange={handleGuaranteeChange}>
+              <option disabled selected>
+                GARANTÍA
+              </option>
+              <option value="CONGARANTIA">CON GARANTÍA</option>
+              <option value="SINGARANTIA">SIN GARANTÍA</option>
+            </select>
+          </div>
         </div>
       </div>
       <div className="divider divider-vertical "></div>
-      <div className=" ">
-        {isLoading ? (
-          <div className="loading-dots">.</div>
-        ) : (
-          <div>
-            {emptyList ? (
-              <div className="w-full flex flex-col justify-center items-center gap-8">
-                <img
-                  src="https://outletzone7.files.wordpress.com/2023/11/no-results-found.png"
-                  alt=""
-                  className="h-[50px]"
-                />
-                <p className="text-xl">No hay ningún producto para mostrar</p>
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-24 text-left ">
-                {products.map((product) => (
-                  <div
-                    key={product.id}
-                    className="card text-black shadow-lg text-lg w-full"
-                  >
-                    <p className="absolute bg-white badge text-black p-3">
-                      {product.product_status}
-                    </p>
-                    <img
-                      src={product.imageUrl}
-                      alt=""
-                      className="w-full max-h-[400px] object-contain rounded-2xl"
-                    />
 
-                    <div className="p-8 flex flex-col space-y-2">
-                      {" "}
-                      <p className="text-xl">{product.product_name}</p>
-                      <p className="text-5xl font-extrabold">
-                        ${product.product_price}
-                      </p>
-                      <p className="badge p-4">
-                        Envio {product.product_shipping}
-                      </p>
-                      <p className="badge p-4">{product.product_guarantee}</p>
-                      <p className="badge p-4">{product.product_condition}</p>
-                      <div className="flex gap-4">
-                        <Link to={`/outletzone/tienda/producto/${product.id}`}>
-                          <button className="btn text-white border-none bg-yellow-400">
-                            Detalles
-                          </button>
-                        </Link>
-                        <button
-                          className="btn text-white border-none bg-yellow-400"
-                          onClick={() =>
-                            addProductToCart({
-                              id: product.id,
-                              product_name: product.product_name,
-                              product_price: product.product_price,
-                              product_status: product.product_status,
-                              imageUrl: product.imageUrl,
-                              product_quantity: product.product_quantity,
-                            })
-                          }
-                        >
-                          Añadir al carrito
+      {isLoading ? (
+        <LoaderIcon className="animate-spin" size={50} />
+      ) : (
+        <div>
+          {emptyList ? (
+            <div className="w-full flex flex-col  mx-auto items-center gap-8">
+              <img
+                src="https://outletzone7.files.wordpress.com/2023/11/no-results-found.png"
+                alt=""
+                className="h-[80px]"
+              />
+              <p className="text-xl">No hay ningún producto para mostrar</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 px-4 lg:grid-cols-2   gap-24 text-left">
+              {products.map((product) => (
+                <div
+                  key={product.id}
+                  className="card text-black shadow-lg text-lg w-full "
+                  role="shop-product"
+                >
+                  <p className="absolute bg-white badge text-black p-3">
+                    {product.product_status}
+                  </p>
+                  <img
+                    src={product.imageUrl}
+                    alt=""
+                    className="w-full max-h-[400px] object-contain rounded-2xl"
+                  />
+
+                  <div className="p-8 flex flex-col space-y-2">
+                    {" "}
+                    {product.product_guarantee}
+                    <p className="text-xl">{product.product_name}</p>
+                    <p className="text-5xl font-extrabold">
+                      ${product.product_price}
+                    </p>
+                    <p className="badge p-4 text-white cursor-default">
+                      Envio {product.product_shipping}
+                    </p>
+                    <p className="badge p-4 text-white cursor-default ">
+                      {product.product_guarantee}
+                    </p>
+                    <p className="badge p-4 text-white cursor-default">
+                      {product.product_condition}
+                    </p>
+                    <div className="flex gap-4">
+                      <Link to={`/outletzone/tienda/producto/${product.id}`}>
+                        <button className="btn text-white border-none bg-yellow-400">
+                          Detalles
                         </button>
-                      </div>
+                      </Link>
+                      <button
+                        className="btn text-white border-none bg-yellow-400"
+                        onClick={() =>
+                          addProductToCart({
+                            id: product.id,
+                            product_name: product.product_name,
+                            product_price: product.product_price,
+                            product_status: product.product_status,
+                            imageUrl: product.imageUrl,
+                            product_quantity: 1,
+                          })
+                        }
+                      >
+                        Añadir al carrito
+                      </button>
                     </div>
                   </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

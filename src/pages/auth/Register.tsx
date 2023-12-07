@@ -5,6 +5,10 @@ import { schemaRegister } from "../../components/schemas/schemaRegister";
 import { ErrorMessage } from "@hookform/error-message";
 import { Link } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Toaster, toast } from "react-hot-toast";
+import { RegisterRequestToast } from "../../components/authComponents/RegisterRequestToast";
+import { RegisterRequestErrorToast } from "../../components/authComponents/RegisterRequestErrorToast";
+import { Loader2 } from "lucide-react";
 
 export const Register = () => {
   const [user, setUser] = useState({
@@ -12,6 +16,7 @@ export const Register = () => {
     password: "",
     confirm_password: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const [capVal, setCapVal] = useState(null);
 
@@ -30,7 +35,8 @@ export const Register = () => {
   };
 
   const onSubmit = async () => {
-    await fetch("https://outletzone-server.onrender.com/api/register", {
+    setIsLoading(true);
+    await fetch("http://localhost:4000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,16 +44,21 @@ export const Register = () => {
       body: JSON.stringify(user),
     }).then((response) => {
       if (response.status === 200) {
-        console.log("User created");
+        setIsLoading(false);
+
+        toast.custom((t) => <RegisterRequestToast t={t} />);
       } else {
-        console.log("Ocurrió un problema :(");
+        toast.custom((t) => <RegisterRequestErrorToast t={t} />);
       }
     });
+    setIsLoading(false);
   };
 
   return (
-    <section className="bg-gray-50 ">
-      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <section className="bg-gray-50 min-h-screen flex justify-center items-center">
+      <Toaster position="top-center" reverseOrder={false} />
+
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:min-h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight  md:text-2xl text-yellow-400">
@@ -175,7 +186,11 @@ export const Register = () => {
                 className="w-full disabled:bg-opacity-60 text-white bg-yellow-400 hover:bg-primary00 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 disabled={!capVal}
               >
-                Crear cuenta
+                {isLoading ? (
+                  <Loader2 className="animate-spin mx-auto" />
+                ) : (
+                  "Crear cuenta"
+                )}
               </button>
               <ReCAPTCHA
                 sitekey="6LdKHiIpAAAAAB6J_D_R63LXH4PNOKWJOD62hW5I"

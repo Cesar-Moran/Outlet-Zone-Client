@@ -10,7 +10,7 @@ export const Homepage = () => {
   ];
 
   return (
-    <article className="">
+    <article className="pt-24 lg:pt-0 ">
       <section className="mb-24">
         <img src={images[0]} alt="" />
 
@@ -34,7 +34,7 @@ export const Homepage = () => {
                     Contactanos
                   </button>
                 </Link>
-                <Link to={"/outletzone/contacto"}>
+                <Link to={"/outletzone/tienda"}>
                   <button className="btn bg-transparent border rounded-none border-yellow-400  text-yellow-400">
                     Tienda
                   </button>
@@ -181,11 +181,11 @@ export const Homepage = () => {
         {/* FAQ */}
         {/* FAQ */}
         {/* FAQ */}
-        <section className="mt-32 flex justify-center items-center mx-auto ">
+        <section className="mt-32 flex  justify-center items-center mx-auto ">
           <img
             src="https://outletzone7.files.wordpress.com/2023/11/faq.png"
             alt="FAQ image"
-            className="h-[400px] w-[400px]"
+            className="h-[400px] w-[400px] hidden lg:block"
           />
           <FAQ />
         </section>

@@ -180,9 +180,10 @@ export const FAQ = () => {
                 >
                   tienda
                 </Link>
-                , selecciona el producto que deseas, añádelo al carrito y sigue
-                los pasos del proceso de pago. Si necesitas ayuda, nuestro
-                equipo de soporte está disponible para guiarte.
+                , selecciona el producto que deseas, añádelo al carrito y
+                continúa la compra enviándonos por el WhatsApp con el botón
+                "Finalizar" en el carrito. Si necesitas ayuda, nuestro equipo de
+                soporte está disponible para guiarte.
               </p>
             </div>
           </div>
@@ -190,9 +191,11 @@ export const FAQ = () => {
       </div>
       <div className="p-8 flex flex-col gap-4">
         <h2 className="text-2xl font-semibold ">¿Sigues teniendo dudas?</h2>
-        <button className="btn btn-ghost rounded-none max-w-[10rem] bg-yellow-400">
-          Contáctanos
-        </button>
+        <Link to={"/outletzone/contacto"}>
+          <button className="btn btn-ghost rounded-none max-w-[10rem] bg-yellow-400">
+            Contáctanos
+          </button>
+        </Link>
       </div>
     </div>
   );

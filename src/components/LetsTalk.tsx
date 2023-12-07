@@ -1,6 +1,5 @@
 import { Redo2 } from "lucide-react";
 import { FaTiktok } from "react-icons/fa";
-import { IoLogoWhatsapp } from "react-icons/io";
 import { RiInstagramFill } from "react-icons/ri";
 
 export const LetsTalk = () => {
@@ -25,18 +24,16 @@ export const LetsTalk = () => {
         </button>
         <div className="flex items-center  mt-8 gap-8">
           <a
-            href="https://www.instagram.com/outletzonecolombia/"
+            href="https://www.tiktok.com/@outletzonecolombia"
             className="hover:scale-105 hover:cursor-pointer duration-300 p-2 border rounded-full"
           >
             <FaTiktok size={15} />
           </a>
+
           <a
-            href="https://www.tiktok.com/@outletzonecolombia"
             className="hover:scale-105 hover:cursor-pointer duration-300  p-2 border rounded-full"
+            href="https://www.instagram.com/outletzonecolombia/"
           >
-            <IoLogoWhatsapp size={15} />
-          </a>
-          <a className="hover:scale-105 hover:cursor-pointer duration-300  p-2 border rounded-full">
             <RiInstagramFill size={15} />
           </a>
         </div>

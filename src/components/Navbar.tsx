@@ -15,86 +15,17 @@ export const Navbar = () => {
   return (
     <nav className="w-full flex items-center justify-between lg:px-60  mx-auto p-2 fixed top-0  z-30 bg-[#ffffff3f] backdrop-blur-lg text-black  ">
       <MobileNavbar />
-
       <Link to={"/"} className="hidden lg:block text-xl font-bold font-mono">
         <p>Outlet Zone</p>
       </Link>
-
       <div className="navbar-center justify-between hidden lg:flex   ">
         <ul className="menu menu-horizontal items-center px-1 ">
-          <li tabIndex={1}>
-            <Link to={"/"}>Inicio</Link>
-          </li>
-
-          <li tabIndex={2}>
-            <details>
-              <summary>Tienda</summary>
-              <ul className="p-2 text-white">
-                <li>
-                  <Link to={"/outletzone/tienda "} className="link link-hover ">
-                    General
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/aires-acondicionados "}
-                    className="link link-hover "
-                  >
-                    Aires Acondicionados
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/neveras"}
-                    className="link link-hover "
-                  >
-                    Neveras
-                  </Link>
-                </li>
-
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/lavadoras"}
-                    className="link link-hover "
-                  >
-                    Lavadoras
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/telefonos"}
-                    className="link link-hover "
-                  >
-                    Telefonos
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/estufas"}
-                    className="link link-hover "
-                  >
-                    Estufas
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/computadores-laptops"}
-                    className="link link-hover "
-                  >
-                    Computadores/Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/articulos-hogar"}
-                    className="link link-hover "
-                  >
-                    Articulos del hogar
-                  </Link>
-                </li>
-              </ul>
-            </details>
-          </li>
+          <Link to={"/"} className="hover:scale-105 duration-200 p-3">
+            <li>Inicio</li>
+          </Link>
+          <Link to={"/outletzone/tienda"}>
+            <li tabIndex={2}>Tienda</li>
+          </Link>
           {user ? (
             <div className="flex items-center gap-3">
               <div className="dropdown dropdown-end  ">

@@ -88,7 +88,16 @@ export const MobileCart = () => {
   };
 
   useEffect(() => {
-    getLocalStorage();
+    const handleCartUpdate = () => {
+      getLocalStorage();
+    };
+
+    window.addEventListener("cartUpdate", handleCartUpdate);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("cartUpdate", handleCartUpdate);
+    };
   }, []);
 
   return (

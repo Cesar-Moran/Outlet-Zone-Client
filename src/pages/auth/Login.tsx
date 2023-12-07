@@ -6,6 +6,9 @@ import { schemaRegister } from "../../components/schemas/schemaRegister";
 import { ErrorMessage } from "@hookform/error-message";
 import { Link, useNavigate } from "react-router-dom";
 import ReCAPTCHA from "react-google-recaptcha";
+import { Toaster, toast } from "react-hot-toast";
+import { Loader2 } from "lucide-react";
+import { LoginErrorToast } from "../../components/authComponents/LoginErrorToast";
 
 export const Login = () => {
   const [user, setUser] = useState({
@@ -13,7 +16,7 @@ export const Login = () => {
     password: "",
   });
   const [capVal, setCapVal] = useState(null);
-
+  const [isLoading, setIsLoading] = useState(false);
   const navigateTo = useNavigate();
 
   const {
@@ -31,7 +34,9 @@ export const Login = () => {
   };
 
   const onSubmit = async () => {
-    await fetch("https://outletzone-server.onrender.com/api/login", {
+    setIsLoading(true);
+
+    await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,19 +47,25 @@ export const Login = () => {
         if (response.status === 200) {
           return response.json(); // Parse the response JSON
         } else {
-          console.log("Hubo un problema :(");
+          toast.custom((t) => <LoginErrorToast t={t} />);
         }
       })
       .then((data) => {
+        if (!data) {
+          return;
+        }
         localStorage.setItem("token", data);
         navigateTo("/");
         window.location.reload();
       });
+
+    setIsLoading(false);
   };
 
   return (
     <section className="bg-gray-50 ">
       {/* Same as */}
+      <Toaster position="top-center" reverseOrder={false} />
 
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto min-h-screen lg:py-0">
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
@@ -80,6 +91,7 @@ export const Login = () => {
                   {...register("email")}
                   value={user.email}
                   onChange={handleChange}
+                  autoComplete="email"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                   placeholder="nombre@gmail.com"
                 />
@@ -107,6 +119,7 @@ export const Login = () => {
                   value={user.password}
                   onChange={handleChange}
                   placeholder="••••••••"
+                  autoComplete="current-password"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 />
                 <ErrorMessage
@@ -124,7 +137,11 @@ export const Login = () => {
                 className="w-full disabled:bg-opacity-60 text-white bg-yellow-400 hover:bg-primary00 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
                 disabled={!capVal}
               >
-                Iniciar sesión
+                {isLoading ? (
+                  <Loader2 className="animate-spin mx-auto" />
+                ) : (
+                  "Iniciar sesión"
+                )}
               </button>
               <ReCAPTCHA
                 sitekey="6LdKHiIpAAAAAB6J_D_R63LXH4PNOKWJOD62hW5I"

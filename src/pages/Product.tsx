@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 
+import { useNavigate } from "react-router-dom";
 import { Link, useParams } from "react-router-dom";
+import { useUserContext } from "../providers/UserProvider";
 
 type Product = {
   id: string;
@@ -13,6 +15,10 @@ type Product = {
 
 export const Product = () => {
   const { id } = useParams();
+  const user = useUserContext();
+
+  const navigateTo = useNavigate();
+
   const [product, setProduct] = useState({
     id: "",
     product_name: "",
@@ -33,7 +39,7 @@ export const Product = () => {
   const displayProduct = async () => {
     try {
       const response = await fetch(
-        `https://outletzone-server.onrender.com/api/displaySingleProduct/${id}`
+        `http://localhost:4000/api/displaySingleProduct/${id}`
       );
 
       if (!response.ok) {
@@ -47,10 +53,12 @@ export const Product = () => {
     }
   };
 
+  const cartUpdateEvent = new Event("cartUpdate");
+
   const addProductToCart = async (product: Product) => {
     // Verifica la disponibilidad del producto antes de agregarlo al carrito
     const response = await fetch(
-      `https://outletzone-server.onrender.com/api/verifyProductQuantity/${product.id}`
+      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
     );
     const data = await response.json();
 
@@ -86,6 +94,20 @@ export const Product = () => {
     // Actualiza el estado y guarda el carrito en el localStorage
 
     localStorage.setItem("cart", JSON.stringify(existingCart));
+    window.dispatchEvent(cartUpdateEvent);
+  };
+
+  const deleteProduct = async (id: string) => {
+    const response = await fetch(
+      `http://localhost:4000/api/deleteProduct/${id}`,
+      { method: "DELETE" }
+    );
+
+    if (response.ok) {
+      navigateTo("/outletzone/tienda");
+    } else {
+      console.log("There was a problem");
+    }
   };
 
   useEffect(() => {
@@ -93,11 +115,11 @@ export const Product = () => {
   }, [id]);
 
   return (
-    <div className="bg-gray-100 py-24 lg:py-8 min-h-screen flex justify-center  items-center">
-      <div className="flex flex-col">
-        <div className="flex flex-col lg:flex-row  space-y-8 ">
-          <div className="md:flex-1 px-4 flex flex-col items-center mx-auto w-full">
-            <div className="text-sm breadcrumbs text-black px-4 mx-auto">
+    <div className=" py-24 lg:py-8 min-h-screen flex justify-center  items-center ">
+      <div className="flex flex-col ">
+        <div className="flex flex-col lg:flex-row items-center  space-y-8 ">
+          <div className="md:flex-1 px-4 flex flex-col items-center mx-auto w-full ">
+            <div className="text-sm breadcrumbs text-black px-4 mx-auto ">
               <ul>
                 <li>
                   <Link to={"/outletzone/tienda"} className="">
@@ -117,17 +139,26 @@ export const Product = () => {
                 </li>
               </ul>
             </div>
-            <div className="h-[560px] rounded-lg mb-4">
+            <div className="h-[560px] rounded-lg mb-4 px-4">
               <img
-                className="w-full h-full object-cover rounded-xl"
+                className="w-full h-full object-contain rounded-xl"
                 src={product.imageUrl}
                 alt="Product Image"
               />
             </div>
-            <div className="flex -mx-2  gap-4 ">
+            <div className="flex -mx-2  gap-4 px-4">
               <div className="w-1/2 px-2">
                 <button
-                  onClick={() => addProductToCart(product)}
+                  onClick={() =>
+                    addProductToCart({
+                      id: product.id,
+                      product_name: product.product_name,
+                      product_price: product.product_price,
+                      product_status: product.product_status,
+                      imageUrl: product.imageUrl,
+                      product_quantity: 1,
+                    })
+                  }
                   className="w-full btn border-none  dark:bg-yellow-400 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700"
                 >
                   Añadir al carrito
@@ -140,7 +171,7 @@ export const Product = () => {
               </div>
             </div>
           </div>
-          <div className="md:flex-1 px-24 mx-auto ">
+          <div className="md:flex-1 lg:px-24 mx-auto ">
             <h2 className="text-3xl font-bold text-gray-800  mb-2 flex items-center gap-4">
               {product.product_name}
               <div className="text-white badge">
@@ -195,6 +226,16 @@ export const Product = () => {
               </span>
             </div>
           </div>
+
+          {user?.role === "ADMIN" ||
+            ("DEV" && (
+              <button
+                className="btn bg-red-500 hover-bg-red-700 text-white border-none mx-8"
+                onClick={() => deleteProduct(product.id)}
+              >
+                Eliminar producto
+              </button>
+            ))}
         </div>
       </div>
     </div>

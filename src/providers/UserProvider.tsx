@@ -8,14 +8,9 @@ interface User {
 }
 
 const userContext = React.createContext<User | null>(null);
-const userToggleContext = React.createContext({});
 
 export function useUserContext() {
   return useContext(userContext);
-}
-
-export function useToggleContext() {
-  return useContext(userToggleContext);
 }
 
 function UserProvider({ children }: any) {
@@ -47,11 +42,7 @@ function UserProvider({ children }: any) {
   }, [token]);
 
   return (
-    <userContext.Provider value={userInfo}>
-      <userToggleContext.Provider value={parseJwt}>
-        {children}
-      </userToggleContext.Provider>
-    </userContext.Provider>
+    <userContext.Provider value={userInfo}>{children}</userContext.Provider>
   );
 }
 
