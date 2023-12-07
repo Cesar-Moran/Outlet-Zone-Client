@@ -211,7 +211,7 @@ export const Shop = () => {
 
                   <div className="p-8 flex flex-col space-y-2">
                     {" "}
-                    {product.product_guarantee}
+                    
                     <p className="text-xl">{product.product_name}</p>
                     <p className="text-5xl font-extrabold">
                       ${product.product_price}
