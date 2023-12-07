@@ -17,6 +17,7 @@ import { Product } from "./pages/Product.tsx";
 import { PageNotFound } from "./components/PageNotFound.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RegisterRequests } from "./pages/RegisterRequests.tsx";
+import { DevPrivateRoutes } from "./private-routes/DevPrivateRoutes.tsx";
 
 const queryClient = new QueryClient();
 
@@ -50,7 +51,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="*" element={<PageNotFound />} />
           <Route
             path="/outletzone/dev/registerRequests"
-            element={<RegisterRequests />}
+            element={
+              <DevPrivateRoutes>
+                <RegisterRequests />
+              </DevPrivateRoutes>
+            }
           />
         </Routes>
 
