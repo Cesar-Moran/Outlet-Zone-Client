@@ -118,14 +118,11 @@ export const AddProduct = () => {
     product_image && formData.append("product_image", product_image);
 
     try {
-      const response = await fetch(
-        "https://outletzone-server.onrender.com/api/addProduct",
-        {
-          method: "POST",
+      const response = await fetch("http://localhost:4000/api/addProduct", {
+        method: "POST",
 
-          body: formData,
-        }
-      );
+        body: formData,
+      });
       // Verificar si la solicitud fue exitosa (código de respuesta en el rango 200-299)
       if (response.ok) {
         // Realizar acciones después de que la solicitud sea exitosa

@@ -36,7 +36,7 @@ export const Login = () => {
   const onSubmit = async () => {
     setIsLoading(true);
 
-    await fetch("https://outletzone-server.onrender.com/api/login", {
+    await fetch("http://localhost:4000/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
