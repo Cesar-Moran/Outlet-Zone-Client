@@ -51,11 +51,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
           <Route path="*" element={<PageNotFound />} />
           <Route
             path="/outletzone/dev/registerRequests"
-            element={
-              <DevPrivateRoutes>
-                <RegisterRequests />
-              </DevPrivateRoutes>
-            }
+            element={<RegisterRequests />}
           />
         </Routes>
 
