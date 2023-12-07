@@ -1,9 +1,7 @@
 import { useState } from "react";
-
 import { Toaster, toast } from "react-hot-toast";
 import { AddProductToast } from "../components/AddProductToast";
 import { Loader2 } from "lucide-react";
-
 import { AddProductErrorToast } from "../components/AddProductErrorToast";
 
 export const AddProduct = () => {
