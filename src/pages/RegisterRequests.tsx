@@ -18,16 +18,13 @@ export const RegisterRequests = () => {
       console.error(`No se encontró la solicitud con ID ${id}`);
       return;
     }
-    await fetch(
-      `https://outletzone-server.onrender.com/api/acceptRequest/${id}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestToAccept),
-      }
-    );
+    await fetch(`http://localhost:4000/api/acceptRequest/${id}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestToAccept),
+    });
   };
 
   const denieRequest = async (id: number) => {
@@ -36,24 +33,19 @@ export const RegisterRequests = () => {
       console.error(`No se encontró la solicitud con ID ${id}`);
       return;
     }
-    await fetch(
-      `https://outletzone-server.onrender.com/api/denieRequest/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestToDenie),
-      }
-    );
+    await fetch(`http://localhost:4000/api/denieRequest/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestToDenie),
+    });
 
     window.location.reload();
   };
 
   const getRegisterRequests = async () => {
-    const response = await fetch(
-      "https://outletzone-server.onrender.com/api/registerRequests"
-    );
+    const response = await fetch("http://localhost:4000/api/registerRequests");
     const data = await response.json();
     setRegisterRequests(data);
   };

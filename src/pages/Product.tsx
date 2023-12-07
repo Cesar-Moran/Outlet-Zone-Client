@@ -39,7 +39,7 @@ export const Product = () => {
   const displayProduct = async () => {
     try {
       const response = await fetch(
-        `https://outletzone-server.onrender.com/api/displaySingleProduct/${id}`
+        `http://localhost:4000/api/displaySingleProduct/${id}`
       );
 
       if (!response.ok) {
@@ -58,7 +58,7 @@ export const Product = () => {
   const addProductToCart = async (product: Product) => {
     // Verifica la disponibilidad del producto antes de agregarlo al carrito
     const response = await fetch(
-      `https://outletzone-server.onrender.com/api/verifyProductQuantity/${product.id}`
+      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
     );
     const data = await response.json();
 
@@ -99,7 +99,7 @@ export const Product = () => {
 
   const deleteProduct = async (id: string) => {
     const response = await fetch(
-      `https://outletzone-server.onrender.com/api/deleteProduct/${id}`,
+      `http://localhost:4000/api/deleteProduct/${id}`,
       { method: "DELETE" }
     );
 
