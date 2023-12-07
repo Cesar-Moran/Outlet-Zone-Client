@@ -110,6 +110,10 @@ export const Product = () => {
     }
   };
 
+  const createWhatsAppMessage = (product_name: any, product_price: any) => {
+    return `Hola!%20Estoy%20interesad@%20en%20el%20producto:%20${product_name}$%20${product_price}`;
+  };
+
   useEffect(() => {
     displayProduct();
   }, [id]);
@@ -165,9 +169,17 @@ export const Product = () => {
                 </button>
               </div>
               <div className="w-1/2 px-2">
-                <button className="w-full btn bg-gray-200 border-none dark:bg-yellow-400 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-300 dark:hover:bg-gray-600">
+                <a
+                  target="_blank"
+                  href={`https://api.whatsapp.com/send?phone=573176378584&text=${createWhatsAppMessage(
+                    product.product_price,
+
+                    product.product_name
+                  )}`}
+                  className="flex items-center gap-2 z-50 dark:bg-yellow-400 text-white   rounded-full  font-medium  w-full mx-auto  border  btn border-none text-sm py2 px-4  duration-200 justify-center "
+                >
                   Háblanos por Whatsapp
-                </button>
+                </a>
               </div>
             </div>
           </div>
