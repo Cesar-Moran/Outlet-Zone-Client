@@ -36,7 +36,9 @@ export const Shop = () => {
   const displayProducts = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch("http://localhost:4000/api/displayProducts");
+      const response = await fetch(
+        "https://outletzone-server.onrender.com/api/displayProducts"
+      );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -58,7 +60,7 @@ export const Shop = () => {
 
   const filterProductsByCategory = async (category: string) => {
     const response = await fetch(
-      `http://localhost:4000/api/filterProductsByCategory/${category}`
+      `https://outletzone-server.onrender.com/api/filterProductsByCategory/${category}`
     );
 
     const data = await response.json();
@@ -71,7 +73,7 @@ export const Shop = () => {
   };
   const filterProductsByGuarantee = async (guarantee: string) => {
     const response = await fetch(
-      `http://localhost:4000/api/filterProductsByGuarantee/${guarantee}`
+      `https://outletzone-server.onrender.com/api/filterProductsByGuarantee/${guarantee}`
     );
 
     const data = await response.json();
@@ -98,7 +100,7 @@ export const Shop = () => {
   const addProductToCart = async (product: Product) => {
     // Verifica la disponibilidad del producto antes de agregarlo al carrito
     const response = await fetch(
-      `http://localhost:4000/api/verifyProductQuantity/${product.id}`
+      `https://outletzone-server.onrender.com/api/verifyProductQuantity/${product.id}`
     );
     const data = await response.json();
 
