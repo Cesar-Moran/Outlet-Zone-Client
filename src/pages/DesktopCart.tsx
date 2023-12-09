@@ -19,7 +19,9 @@ export const DesktopCart = () => {
     const storedProducts = localStorage.getItem("cart");
     const parsedProducts = storedProducts ? JSON.parse(storedProducts) : [];
     setProducts(parsedProducts);
-    const response = await fetch("http://localhost:4000/api/displayProducts");
+    const response = await fetch(
+      "https://outletzone-server.onrender.com/api/displayProducts"
+    );
     const data = await response.json();
     setDbProducts(data);
   };

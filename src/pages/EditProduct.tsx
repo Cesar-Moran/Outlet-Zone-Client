@@ -57,7 +57,7 @@ export const EditProduct = () => {
   const onSubmit = async (ev: any) => {
     ev.preventDefault();
     const response = await fetch(
-      `http://localhost:4000/api/editProduct/${id}`,
+      `https://outletzone-server.onrender.com/api/editProduct/${id}`,
       {
         method: "PUT",
         headers: {
