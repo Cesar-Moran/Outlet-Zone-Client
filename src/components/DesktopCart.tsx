@@ -12,31 +12,34 @@ type Product = {
 
 export const DesktopCart = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
 
-  const getLocalStorage = () => {
+  const getLocalStorage = async () => {
     // Get the localStorage item "cart"
     const storedProducts = localStorage.getItem("cart");
     const parsedProducts = storedProducts ? JSON.parse(storedProducts) : [];
     setProducts(parsedProducts);
+    const response = await fetch("http://localhost:4000/api/displayProducts");
+    const data = await response.json();
+    setDbProducts(data);
   };
 
-  const increaseQuantity = (product: Product) => {
+  const increaseQuantity = async (product: Product) => {
     const storedProducts = localStorage.getItem("cart");
     let parsedProducts: Product[] = storedProducts
       ? JSON.parse(storedProducts)
       : [];
 
-    // Find the specific product in the array
+    const existingProductQuantity = dbProducts.find((p) => p.id === product.id);
     const existingProduct = parsedProducts.find((p) => p.id === product.id);
 
-    if (existingProduct) {
-      // Increase the quantity of the specific product
+    if (
+      existingProduct &&
+      existingProductQuantity &&
+      product.product_quantity < existingProductQuantity.product_quantity
+    ) {
       existingProduct.product_quantity += 1;
-
-      // Update local storage immediately
       localStorage.setItem("cart", JSON.stringify(parsedProducts));
-
-      // Fetch the updated data from local storage
       getLocalStorage();
     }
   };
@@ -97,13 +100,13 @@ export const DesktopCart = () => {
   const createWhatsAppMessage = () => {
     const message = products
       .map((product) => {
-        return `*${product.product_name}: ${product.product_quantity} x $${product.product_price}*`;
+        return `*${product.product_name}: ${product.product_quantity} x $${product.product_price}* https://outletzone.netlify.app/outletzone/tienda/producto/${product.id}`;
       })
       .join("%0A");
 
-    const totalMessage = `%0A%0A*Total:* ${getCartTotal()}`;
+    const totalMessage = `%0A%0A*Total:* ${getCartTotal()}%20\n%20%20%20%20%20%20%20%20%20%20%20%20`;
 
-    return `Hola!%20Mi%20pedido%20es:${message}${totalMessage}`;
+    return `Hola!%20Mi%20pedido%20es:${message}${totalMessage}%20\n%20%20%20%20%20%20%20%20%20%20%20`;
   };
 
   useEffect(() => {
@@ -121,7 +124,7 @@ export const DesktopCart = () => {
   }, []);
 
   return (
-    <div className="drawer drawer-end z-50 ">
+    <div className="drawer drawer-end z-50 normal-case">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
         {/* Page content here */}
@@ -143,7 +146,7 @@ export const DesktopCart = () => {
         ></label>
 
         <ul className="menu min-h-full w-full max-w-lg p-0 space-y-8 text-black bg-white  mb-4">
-          <div className="flex items-center p-8">
+          <div className="flex items-center p-8 ">
             <label
               htmlFor="my-drawer-3"
               aria-label="close sidebar"
@@ -159,17 +162,17 @@ export const DesktopCart = () => {
           {products.map((product) => (
             <div
               key={product.id}
-              className="flex flex-col lg:flex-row items-center p-0 gap-8 px-4"
+              className="flex flex-col lg:flex-row items-center  gap-8 px-4"
             >
               <img
                 src={product.imageUrl}
                 className=" lg:w-[250px] lg:h-[250px] object-contain p-0 rounded-xl"
               ></img>
               <div className="">
-                <p className="text-lg lg:text-3xl font-bold text-yellow-500  mb-2 flex items-center gap-4 ">
+                <p className="text-lg lg:text-3xl font-bold   mb-2 flex items-center gap-4 ">
                   {product.product_name}
                 </p>
-                <p className="text-yellow-500 text-lg lg:text-2xl font-semibold mb-2">
+                <p className=" text-lg lg:text-2xl font-bold mb-2">
                   ${product.product_price}
                 </p>
 
@@ -193,7 +196,7 @@ export const DesktopCart = () => {
                     </button>
                   </div>
                   <button
-                    className=" w-full py-4 font-medium rounded-lg   underline text-lg "
+                    className=" w-full py-4 font-medium rounded-lg text-yellow-500  underline text-lg "
                     onClick={() => removeProductFromCart(product)}
                   >
                     Remover

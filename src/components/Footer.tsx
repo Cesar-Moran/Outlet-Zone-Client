@@ -7,98 +7,34 @@ export const Footer = () => {
   return (
     <footer className="footer footer-center py-8 bg-[#090809] relative z-50">
       <nav className="grid grid-flow-col gap-4">
-        <ul className="list-none grid grid-cols-1 md:grid-cols-3 gap-8">
+        <ul className="list-none gap-8">
           <li>
-            <Link
-              to={"/outletzone/contacto"}
-              className="link link-hover font-medium"
-            >
-              Contáctanos
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to={"/outletzone/tienda"}
-              className="link link-hover font-medium"
-            >
-              Tienda
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/outletzone/tienda/aires-acondicionados "}
-              className="link link-hover "
-            >
-              Aires Acondicionados
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/outletzone/tienda/neveras"}
-              className="link link-hover "
-            >
-              Neveras
-            </Link>
-          </li>
-
-          <li>
-            <Link
-              to={"/outletzone/tienda/lavadoras"}
-              className="link link-hover "
-            >
-              Lavadoras
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/outletzone/tienda/telefonos"}
-              className="link link-hover "
-            >
-              Telefonos
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/outletzone/tienda/estufas"}
-              className="link link-hover "
-            >
-              Estufas
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/outletzone/tienda/computadores-laptops"}
-              className="link link-hover "
-            >
-              Computadores/Laptops
-            </Link>
-          </li>
-          <li>
-            <Link
-              to={"/outletzone/tienda/articulos-hogar"}
-              className="link link-hover "
-            >
-              Articulos del hogar
-            </Link>
+            <img
+              src="https://outletzone7.files.wordpress.com/2023/11/397349151_1073498366921565_8115290529435045220_n-1.jpg"
+              alt="outletzone logo"
+              className="mx-auto "
+            />
           </li>
         </ul>
       </nav>
       <nav>
         <div className="grid grid-flow-col gap-4">
           <a
-            href="https://www.instagram.com/outletzonecolombia/"
+            href="https://www.tiktok.com/@outletzonecolombia"
             className="hover:scale-105 hover:cursor-pointer duration-300"
           >
             <FaTiktok size={22} />
           </a>
           <a
-            href="https://www.tiktok.com/@outletzonecolombia"
             className="hover:scale-105 hover:cursor-pointer duration-300"
+            href="https://wa.link/z109k4"
           >
             <IoLogoWhatsapp size={22} />
           </a>
-          <a className="hover:scale-105 hover:cursor-pointer duration-300">
+          <a
+            className="hover:scale-105 hover:cursor-pointer duration-300"
+            href="https://www.instagram.com/outletzonecolombia/"
+          >
             <RiInstagramFill size={22} />
           </a>
         </div>

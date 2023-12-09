@@ -15,8 +15,8 @@ export const AddProduct = () => {
   const [product_condition, setProductCondition] = useState("");
   const [product_details, setProductDetails] = useState("");
   const [product_guarantee, setProductGuarantee] = useState("CONGARANTIA");
-  const [category, setCategory] = useState("");
-  const [product_status, setProductStatus] = useState("");
+  const [category, setCategory] = useState("NEVERA");
+  const [product_status, setProductStatus] = useState("USADO");
   console.log(product_status);
   const [product_image, setProductImage] = useState<File | null>(null);
 
@@ -40,6 +40,10 @@ export const AddProduct = () => {
     { optionText: "TELEVISOR" },
     { optionText: "LAPTOP/PC", value: "COMPUTADORA" },
     { optionText: "ARTICULO PARA HOGAR", value: "ARTICULOPARAHOGAR" },
+    { optionText: "ORGANIZADORES" },
+    { optionText: "ACCESORIOS" },
+    { optionText: "ACCESORIO COCINA", value: "ACCESORIOCOCINA" },
+    { optionText: "REPUESTOS" },
   ];
 
   const handleStatusSelect = (event: any) => {
@@ -203,6 +207,7 @@ export const AddProduct = () => {
         <div className="space-y-3 text-white">
           <h2>El producto está usado, poco usado, casi nuevo o nuevo?</h2>
 
+          {/* STATUS SELECT */}
           <select
             className="w-full select"
             name="product_status"
@@ -213,6 +218,9 @@ export const AddProduct = () => {
               <option value={option.optionText}>{option.optionText}</option>
             ))}
           </select>
+
+          {/* GUARANTEE SELECT */}
+
           <select
             className="w-full select"
             name="product_guarantee"
@@ -223,6 +231,9 @@ export const AddProduct = () => {
               <option value={option.value}>{option.optionText}</option>
             ))}
           </select>
+
+          {/* CATEGORY SELECT */}
+
           <select
             className="w-full select"
             name="category"

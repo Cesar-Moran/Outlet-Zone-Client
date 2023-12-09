@@ -12,22 +12,35 @@ export const Navbar = () => {
     window.location.reload();
   };
 
+  const linkHover =
+    "relative w-fit block after:block after:content-[''] after:absolute after:w-full after:h-[1px] mx-3 after:bg-black after:scale-x-0 hover:after:scale-x-100 after:transition after:duration-300 after:origin-center";
+
   return (
     <nav className="w-full flex items-center justify-between lg:px-60  mx-auto p-2 fixed top-0  z-30 bg-[#ffffff3f] backdrop-blur-lg text-black  ">
       <MobileNavbar />
-      <Link to={"/"} className="hidden lg:block text-xl font-bold font-mono">
+
+      <Link
+        to={"/"}
+        className="hidden lg:flex items-center gap-4 text-xl font-bold font-mono  "
+      >
+        <img
+          src="https://outletzone7.files.wordpress.com/2023/11/397349151_1073498366921565_8115290529435045220_n-1.jpg"
+          alt="outletzone logo"
+          className="mx-auto w-12 rounded-lg "
+        />
         <p>Outlet Zone</p>
       </Link>
+
       <div className="navbar-center justify-between hidden lg:flex   ">
-        <ul className="menu menu-horizontal items-center px-1 ">
-          <Link to={"/"} className="hover:scale-105 duration-200 p-3">
+        <ul className="menu menu-horizontal items-center px-1 uppercase text-sm">
+          <Link to={"/"} className={linkHover}>
             <li>Inicio</li>
           </Link>
-          <Link to={"/outletzone/tienda"}>
+          <Link to={"/outletzone/tienda"} className={linkHover}>
             <li tabIndex={2}>Tienda</li>
           </Link>
           {user ? (
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 normal-case">
               <div className="dropdown dropdown-end  ">
                 <div
                   tabIndex={0}

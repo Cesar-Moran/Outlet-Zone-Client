@@ -29,6 +29,7 @@ export const Shop = () => {
       category: "",
     },
   ]);
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -37,7 +38,7 @@ export const Shop = () => {
     try {
       setIsLoading(true);
       const response = await fetch(
-        "https://outletzone-server.onrender.com/api/displayProducts"
+        `https://outletzone-server.onrender.com/api/displayProducts`
       );
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -71,39 +72,20 @@ export const Shop = () => {
     }
     setProducts(data);
   };
-  const filterProductsByGuarantee = async (guarantee: string) => {
-    const response = await fetch(
-      `https://outletzone-server.onrender.com/api/filterProductsByGuarantee/${guarantee}`
-    );
-
-    const data = await response.json();
-    if (data.length <= 0) {
-      setEmptyList(true);
-    } else {
-      setEmptyList(false);
-    }
-    setProducts(data);
-  };
 
   const handleCategoryChange = (event: any) => {
     const selectedCategory = event.target.value;
     filterProductsByCategory(selectedCategory);
   };
 
-  const handleGuaranteeChange = (event: any) => {
-    const selectedGuarantee = event.target.value;
-    filterProductsByGuarantee(selectedGuarantee);
-  };
-
   const cartUpdateEvent = new Event("cartUpdate");
 
   const addProductToCart = async (product: Product) => {
-    // Verifica la disponibilidad del producto antes de agregarlo al carrito
     const response = await fetch(
-      `https://outletzone-server.onrender.com/api/verifyProductQuantity/${product.id}`
+      "https://outletzone-server.onrender.com/api/displayProducts"
     );
     const data = await response.json();
-
+    setDbProducts(data);
     // El usuario solo debe poder agregar la cantidad que esté disponible y no más de esa cantidad.
 
     // Obtén el carrito actual del localStorage
@@ -112,9 +94,19 @@ export const Shop = () => {
     ) as Product[];
 
     // Busca si el producto ya está en el carrito
+    const existingProductQuantity = dbProducts.find((p) => p.id === product.id);
+
     const existingProduct = existingCart.find((p) => p.id === product.id);
 
-    if (existingProduct) {
+    if (product.id === existingProduct?.id) {
+      return;
+    }
+
+    if (
+      existingProduct &&
+      existingProductQuantity &&
+      product.product_quantity < existingProductQuantity.product_quantity
+    ) {
       const totalQuantity =
         existingProduct.product_quantity + product.product_quantity;
 
@@ -144,9 +136,9 @@ export const Shop = () => {
   }, []);
 
   return (
-    <div className="min-h-screen  flex flex-col  xl:flex-row container  justify-around py-24 sm:py-24 gap-4  items-center  text-center ">
+    <div className="min-h-screen  flex flex-col  xl:flex-row  justify-evenly py-24  gap-4  items-center  text-center ">
       <div className=" xl:fixed top-24 left-0 px-12  lg:z-40 flex items-center  flex-col  xl:border-e xl:border-gray-300 h-full">
-        <div className="filter-rules w-full  max-w-sm flex flex-col gap-4">
+        <div className="filter-rules w-full   flex flex-col gap-4">
           <div className="flex flex-col">
             <h1 className="text-2xl" role="heading">
               Filtrar por:{" "}
@@ -165,14 +157,10 @@ export const Shop = () => {
               <option value="TELEFONO">TELEFONOS</option>
               <option value="COMPUTADORA">COMPUTADORAS</option>
               <option value="LAVADORA">LAVADORAS</option>
-            </select>
-
-            <select className="mx-auto select" onChange={handleGuaranteeChange}>
-              <option disabled selected>
-                GARANTÍA
-              </option>
-              <option value="CONGARANTIA">CON GARANTÍA</option>
-              <option value="SINGARANTIA">SIN GARANTÍA</option>
+              <option value="ORGANIZADORES">ORGANIZADORES</option>
+              <option value="ACCESORIOS">ACCESORIOS</option>
+              <option value="ACCESORIOCOCINA">ACCESORIOS COCINA</option>
+              <option value="REPUESTOS">REPUESTOS</option>
             </select>
           </div>
         </div>
@@ -193,11 +181,11 @@ export const Shop = () => {
               <p className="text-xl">No hay ningún producto para mostrar</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 px-4 lg:grid-cols-2   gap-24 text-left">
+            <div className="grid grid-cols-1 md:grid-cols-2 px-4 lg:grid-cols-3   gap-8 text-left">
               {products.map((product) => (
                 <div
                   key={product.id}
-                  className="card text-black shadow-lg text-lg w-full "
+                  className="card text-black shadow-lg text-lg w-full max-w-xs "
                   role="shop-product"
                 >
                   <p className="absolute bg-white badge text-black p-3">
@@ -206,12 +194,11 @@ export const Shop = () => {
                   <img
                     src={product.imageUrl}
                     alt=""
-                    className="w-full max-h-[400px] object-contain rounded-2xl"
+                    className="w-full max-h-[300px] object-contain rounded-2xl"
                   />
 
                   <div className="p-8 flex flex-col space-y-2">
                     {" "}
-                    
                     <p className="text-xl">{product.product_name}</p>
                     <p className="text-5xl font-extrabold">
                       ${product.product_price}

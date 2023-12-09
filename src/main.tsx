@@ -18,6 +18,7 @@ import { PageNotFound } from "./components/PageNotFound.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { RegisterRequests } from "./pages/RegisterRequests.tsx";
 import { DevPrivateRoutes } from "./private-routes/DevPrivateRoutes.tsx";
+import { EditProduct } from "./pages/EditProduct.tsx";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +55,14 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             element={
               <DevPrivateRoutes>
                 <RegisterRequests />
+              </DevPrivateRoutes>
+            }
+          />
+          <Route
+            path="/outletzone/editar-producto/:id"
+            element={
+              <DevPrivateRoutes>
+                <EditProduct />
               </DevPrivateRoutes>
             }
           />

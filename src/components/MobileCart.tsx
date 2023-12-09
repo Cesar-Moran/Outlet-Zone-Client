@@ -12,32 +12,40 @@ type Product = {
 
 export const MobileCart = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [dbProducts, setDbProducts] = useState<Product[]>([]);
 
-  const getLocalStorage = () => {
+  const getLocalStorage = async () => {
     const storedProducts = localStorage.getItem("cart");
     const parsedProducts = storedProducts ? JSON.parse(storedProducts) : [];
     setProducts(products);
     setProducts(parsedProducts);
+    const response = await fetch(
+      "https://outletzone-server.onrender.com/api/displayProducts"
+    );
+    const data = await response.json();
+    setDbProducts(data);
   };
 
-  const increaseQuantity = (product: Product) => {
+  const increaseQuantity = async (product: Product) => {
     const storedProducts = localStorage.getItem("cart");
     let parsedProducts: Product[] = storedProducts
       ? JSON.parse(storedProducts)
       : [];
 
-    // Encuentra el producto específico en el array
+    const existingProductQuantity = dbProducts.find((p) => p.id === product.id);
     const existingProduct = parsedProducts.find((p) => p.id === product.id);
 
-    if (existingProduct) {
-      // Aumenta la cantidad del producto específico
+    if (
+      existingProduct &&
+      existingProductQuantity &&
+      product.product_quantity < existingProductQuantity.product_quantity
+    ) {
       existingProduct.product_quantity += 1;
-
-      // Actualiza el estado y vuelve a guardar en localStorage
-      setProducts([...parsedProducts]);
       localStorage.setItem("cart", JSON.stringify(parsedProducts));
+      getLocalStorage();
     }
   };
+
   const decreaseQuantity = (product: Product) => {
     const storedProducts = localStorage.getItem("cart");
     let parsedProducts: Product[] = storedProducts
@@ -87,7 +95,20 @@ export const MobileCart = () => {
       .toLocaleString("es-CO", { style: "currency", currency: "COP" });
   };
 
+  const createWhatsAppMessage = () => {
+    const message = products
+      .map((product) => {
+        return `*${product.product_name}: ${product.product_quantity} x $${product.product_price}* https://outletzone.netlify.app/outletzone/tienda/producto/${product.id}`;
+      })
+      .join("%0A");
+
+    const totalMessage = `%0A%0A*Total:* ${getCartTotal()}%20\n%20%20%20%20%20%20%20%20%20%20%20%20`;
+
+    return `Hola!%20Mi%20pedido%20es:${message}${totalMessage}%20\n%20%20%20%20%20%20%20%20%20%20%20`;
+  };
+
   useEffect(() => {
+    getLocalStorage();
     const handleCartUpdate = () => {
       getLocalStorage();
     };
@@ -101,26 +122,26 @@ export const MobileCart = () => {
   }, []);
 
   return (
-    <div className="drawer drawer-end z-50 ">
+    <div className="drawer drawer-end z-50  normal-case">
       <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content">
+      <div className="drawer-content w-full">
         {/* Page content here */}
         <label
           htmlFor="my-drawer-4"
-          className="drawer-button  btn-ghost btn-circle  shadow-none bg-transparent border-none hover:text-yellow-400  text-lg  rounded-full btn btn-primary"
+          className="drawer-button   btn-ghost btn-circle  shadow-none bg-transparent border-none hover:text-yellow-400  text-lg  rounded-full btn btn-primary"
         >
           <FaCartPlus />
         </label>
       </div>
-      <div className="drawer-side ">
+      <div className="drawer-side">
         <label
           htmlFor="my-drawer-4"
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
 
-        <ul className="menu min-h-full p-0 space-y-8 text-black bg-white  mb-4">
-          <div className="flex items-center sticky top-0 bg-black bg-opacity-90 p-8">
+        <ul className="menu min-h-full p-0 space-y-8 text-black bg-white  mb-4 w-full">
+          <div className="flex items-center sticky top-0 p-8">
             <label
               htmlFor="my-drawer-4"
               aria-label="close sidebar"
@@ -140,13 +161,13 @@ export const MobileCart = () => {
             >
               <img
                 src={product.imageUrl}
-                className=" lg:w-[250px] lg:h-[250px] object-contain p-0 rounded-xl"
+                className="h-[250px]  object-contain  p-0"
               ></img>
               <div className="">
-                <p className="text-lg lg:text-3xl font-bold text-yellow-500  mb-2 flex items-center gap-4 ">
+                <p className="text-xl lg:text-3xl font-bold  mb-2 flex items-center gap-4 ">
                   {product.product_name}
                 </p>
-                <p className="text-yellow-500 text-lg lg:text-2xl font-semibold mb-2">
+                <p className="text-xl lg:text-2xl font-semibold mb-2">
                   ${product.product_price}
                 </p>
 
@@ -154,7 +175,7 @@ export const MobileCart = () => {
                   <div className=" flex  items-center  gap-8 border p-4 rounded-full flex-wrap ">
                     <button
                       className=" mx-auto"
-                      disabled={product.product_quantity === 0}
+                      disabled={product.product_quantity === 1}
                       onClick={() => decreaseQuantity(product)}
                     >
                       <MinusIcon />
@@ -170,7 +191,7 @@ export const MobileCart = () => {
                     </button>
                   </div>
                   <button
-                    className=" w-full py-4 font-medium rounded-lg   underline text-lg "
+                    className=" w-full py-4 font-medium rounded-lg   underline text-lg text-yellow-500"
                     onClick={() => removeProductFromCart(product)}
                   >
                     Remover
@@ -186,9 +207,13 @@ export const MobileCart = () => {
               <p className="text-lg font-bold flex justify-between items-center uppercase">
                 Total: <span> {getCartTotal()}</span>
               </p>
-              <button className="flex  items-center gap-2 z-50  rounded-full py-3 font-medium px-3 w-full mx-auto text-black border hover:bg-black hover:text-white  duration-200 leading-normal text-lg justify-center uppercase">
+              <a
+                target="_blank"
+                href={`https://api.whatsapp.com/send?phone=573176378584&text=${createWhatsAppMessage()}`}
+                className="flex  items-center gap-2 z-50  rounded-full py-3 font-medium px-3 w-full mx-auto text-black border hover:bg-black hover:text-white  duration-200 leading-normal text-lg justify-center uppercase"
+              >
                 Finalizar
-              </button>
+              </a>
             </div>
           </div>
         </ul>

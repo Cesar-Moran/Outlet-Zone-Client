@@ -30,7 +30,7 @@ export const MobileNavbar = () => {
             />
           </Link>
         </div>
-        <div className="drawer-side ">
+        <div className="drawer-side uppercase">
           <label
             htmlFor="my-drawer"
             aria-label="close sidebar"
@@ -38,79 +38,16 @@ export const MobileNavbar = () => {
           ></label>
           <ul className="menu lg:menu-horizontal p-4 w-80 min-h-full bg-white text-black backdrop-blur-md ">
             {/* Sidebar content here */}
-            <li className="text-lg">
+            <li className="text-lg ">
               <Link to={"/"}>Inicio</Link>
             </li>
-            <div className="collapse collapse-plus ">
-              <input type="checkbox" />
-              <summary className="collapse-title text-lg">Tienda</summary>
-              <ul className="p-2  collapse-content my-0 py-0">
-                <li>
-                  <Link
-                    to={"/outletzone/tienda "}
-                    className="link link-hover  "
-                  >
-                    General
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/aires-acondicionados "}
-                    className="link link-hover "
-                  >
-                    Aires Acondicionados
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/neveras"}
-                    className="link link-hover "
-                  >
-                    Neveras
-                  </Link>
-                </li>
+            <div className=" ">
+              <li>
+                <Link to={"/outletzone/tienda"} className="text-lg ">
+                  Tienda
+                </Link>
+              </li>
 
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/lavadoras"}
-                    className="link link-hover "
-                  >
-                    Lavadoras
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/telefonos"}
-                    className="link link-hover "
-                  >
-                    Telefonos
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/estufas"}
-                    className="link link-hover "
-                  >
-                    Estufas
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/computadores-laptops"}
-                    className="link link-hover "
-                  >
-                    Computadores/Laptops
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to={"/outletzone/tienda/articulos-hogar"}
-                    className="link link-hover "
-                  >
-                    Articulos del hogar
-                  </Link>
-                </li>
-              </ul>
               <li className="text-lg">
                 <Link to={"/outletzone/contacto"}>Contáctanos</Link>
               </li>

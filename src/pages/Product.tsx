@@ -72,6 +72,10 @@ export const Product = () => {
     // Busca si el producto ya está en el carrito
     const existingProduct = existingCart.find((p) => p.id === product.id);
 
+    if (product.id === existingProduct?.id) {
+      return;
+    }
+
     if (existingProduct) {
       const totalQuantity =
         existingProduct.product_quantity + product.product_quantity;
@@ -123,8 +127,8 @@ export const Product = () => {
       <div className="flex flex-col ">
         <div className="flex flex-col lg:flex-row items-center  space-y-8 ">
           <div className="md:flex-1 px-4 flex flex-col items-center mx-auto w-full ">
-            <div className="text-sm breadcrumbs text-black px-4 mx-auto ">
-              <ul>
+            <div className="text-sm breadcrumbs text-black px-4 mx-auto">
+              <ul className="flex flex-col sm:flex-row">
                 <li>
                   <Link to={"/outletzone/tienda"} className="">
                     Tienda
@@ -143,15 +147,15 @@ export const Product = () => {
                 </li>
               </ul>
             </div>
-            <div className="h-[560px] rounded-lg mb-4 px-4">
+            <div className="h-[460px] rounded-lg mb-4 ">
               <img
                 className="w-full h-full object-contain rounded-xl"
                 src={product.imageUrl}
                 alt="Product Image"
               />
             </div>
-            <div className="flex -mx-2  gap-4 px-4">
-              <div className="w-1/2 px-2">
+            <div className="flex -mx-2  gap-4 px-4 ">
+              <div className="w-1/2 px-2 ">
                 <button
                   onClick={() =>
                     addProductToCart({
@@ -183,71 +187,92 @@ export const Product = () => {
               </div>
             </div>
           </div>
-          <div className="md:flex-1 lg:px-24 mx-auto ">
-            <h2 className="text-3xl font-bold text-gray-800  mb-2 flex items-center gap-4">
-              {product.product_name}
-              <div className="text-white badge">
-                {product.product_guarantee}
-              </div>
-            </h2>
+          <div className=" px-12 lg:px-24 mx-auto">
+            <div className="my-24 max-w-5xl">
+              <h2 className="text-3xl font-bold text-gray-800  mb-2 flex items-center gap-4 ">
+                {product.product_name}
+                <div className="text-white badge hidden lg:block">
+                  {product.product_guarantee}
+                </div>
+              </h2>
 
-            <div className="flex mb-4 items-center">
-              <div className="mr-4 space-x-2 ">
-                <span className="text-gray-600 text-5xl font-extrabold">
-                  ${product.product_price}
+              <div className="flex mb-4 items-center">
+                <div className="mr-4 space-x-2 ">
+                  <span className="text-gray-600 text-5xl font-extrabold">
+                    ${product.product_price}
+                  </span>
+                </div>
+              </div>
+              <div className="space-x-2 my-2">
+                <span className="font-bold text-gray-700  text-2xl">
+                  Disponibles:
+                </span>
+                <span className="text-gray-600 text-lg">
+                  {product.product_quantity}
+                </span>
+              </div>
+
+              <div>
+                <span className="font-bold text-gray-700 text-2xl ">
+                  Descripción del producto:
+                </span>
+                <p className="text-gray-600  text-lg mt-2 ">
+                  {product.product_description}
+                </p>
+              </div>
+              <div className="mt-4">
+                <span className="font-bold text-gray-700 text-2xl">
+                  Ubicación:
+                </span>
+                <span className="text-gray-600 ml-2 capitalize text-lg">
+                  {product.product_location}
+                </span>
+              </div>
+              <div className="mt-4">
+                <span className="font-bold text-gray-700 text-2xl">Envío:</span>
+                <span className="text-gray-600 ml-2 capitalize text-lg">
+                  {product.product_shipping}
+                </span>
+              </div>
+              <div className="mt-4 ">
+                <span className="font-bold text-gray-700 text-2xl ">
+                  Estado:
+                </span>
+                <span className="text-gray-600 ml-2 capitalize text-lg">
+                  {product.product_condition}
+                </span>
+              </div>
+              <div className="  mt-4">
+                <span className="font-bold text-gray-700 text-2xl ">
+                  Detalles:
+                </span>
+                <span className="flex   text-gray-600   text-lg">
+                  {product.product_details}
                 </span>
               </div>
             </div>
-            <div className="space-x-2 my-2">
-              <span className="font-bold text-gray-700  text-2xl">
-                Disponibles:
-              </span>
-              <span className="text-gray-600 text-lg">
-                {product.product_quantity}
-              </span>
-            </div>
-
             <div>
-              <span className="font-bold text-gray-700 text-2xl ">
-                Descripción del producto:
-              </span>
-              <p className="text-gray-600  text-lg mt-2 ">
-                {product.product_description}
-              </p>
-            </div>
-            <div className="mt-4">
-              <span className="font-bold text-gray-700 text-2xl">
-                Ubicación:
-              </span>
-              <span className="text-gray-600 ml-2 capitalize text-lg">
-                {product.product_location}
-              </span>
-            </div>
-            <div className="mt-4 ">
-              <span className="font-bold text-gray-700 text-2xl ">Estado:</span>
-              <span className="text-gray-600 ml-2 capitalize text-lg">
-                {product.product_condition}
-              </span>
-            </div>
-            <div className="  mt-4">
-              <span className="font-bold text-gray-700 text-2xl ">
-                Detalles:
-              </span>
-              <span className="flex   text-gray-600   text-lg">
-                {product.product_details}
-              </span>
+              {user?.role === "ADMIN" ||
+                ("DEV" && (
+                  <div className="mt-8 space-y-4 lg:space-x-4 lg:space-y-0 flex flex-col lg:flex-row justify-start items-start text-left w-full">
+                    <button
+                      className="btn bg-red-500 hover-bg-red-700 text-white border-none  w-full lg:w-auto"
+                      onClick={() => deleteProduct(product.id)}
+                    >
+                      Eliminar producto
+                    </button>
+                    <Link
+                      to={`/outletzone/editar-producto/${product.id}`}
+                      className="w-full lg:w-auto"
+                    >
+                      <button className="btn bg-red-500 hover-bg-red-700 text-white border-none  w-full lg:w-auto">
+                        Editar producto
+                      </button>
+                    </Link>
+                  </div>
+                ))}
             </div>
           </div>
-
-          {user?.role === "ADMIN" ||
-            ("DEV" && (
-              <button
-                className="btn bg-red-500 hover-bg-red-700 text-white border-none mx-8"
-                onClick={() => deleteProduct(product.id)}
-              >
-                Eliminar producto
-              </button>
-            ))}
         </div>
       </div>
     </div>
