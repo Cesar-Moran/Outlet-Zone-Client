@@ -199,11 +199,6 @@ export const Homepage = () => {
         referrerPolicy="no-referrer-when-downgrade"
         className="w-full"
       ></iframe>
-      <img
-        src="https://outletzone7.files.wordpress.com/2023/11/califica-1.jpg"
-        alt="Califica nuestro servicio"
-        className="bg-cover w-full "
-      />
     </article>
   );
 };
