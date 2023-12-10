@@ -41,7 +41,7 @@ export const MobileNavbar = () => {
             <label
               htmlFor="my-drawer"
               aria-label="close sidebar"
-              className="drawer-overlay hover:cursor-pointer ml-4 "
+              className="drawer-overlay hover:cursor-pointer ml-4 flex justify-end"
             >
               <X className=" hover:scale-125 duration-200 " />
             </label>
