@@ -2,6 +2,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../providers/UserProvider";
 import { MobileCart } from "./MobileCart";
+import { X } from "lucide-react";
 
 export const MobileNavbar = () => {
   const user = useUserContext();
@@ -37,6 +38,13 @@ export const MobileNavbar = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu lg:menu-horizontal p-4 w-80 min-h-full bg-white text-black backdrop-blur-md ">
+            <label
+              htmlFor="my-drawer"
+              aria-label="close sidebar"
+              className="drawer-overlay hover:cursor-pointer ml-4 "
+            >
+              <X className=" hover:scale-125 duration-200 " />
+            </label>
             {/* Sidebar content here */}
             <li className="text-lg ">
               <Link to={"/"}>Inicio</Link>
