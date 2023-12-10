@@ -1,7 +1,7 @@
 import { RxHamburgerMenu } from "react-icons/rx";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../providers/UserProvider";
-import { MobileCart } from "./MobileCart";
+import { MobileCart } from "../pages/MobileCart";
 
 export const MobileNavbar = () => {
   const user = useUserContext();
